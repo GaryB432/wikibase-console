@@ -8,6 +8,7 @@
     "dev": "tsx watch src/main.ts",
     "start": "node ./dist/main.js",
     "build": "rimraf ./dist && tsc && tsc-alias",
+    "test": "echo vitest",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },

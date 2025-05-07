@@ -17,62 +17,8 @@ env:
   PNPM_VERSION: 10
 
 jobs:
-  lint-and-format:
-    name: Lint and format packages
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Setup NodeJS environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build packages
-        run: pnpm build
-
-      - name: Typecheck packages
-        run: pnpm lint
-
-  typecheck:
-    name: Type-check packages
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2
-        with:
-          version: ${{ env.PNPM_VERSION }}
-
-      - name: Setup NodeJS environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install
-
-      # - name: Build packages
-      #   run: pnpm build
-
-      - name: Typecheck packages
-        run: pnpm typecheck
-
   test:
-    name: Test packages
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -91,52 +37,10 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Build packages
-        run: pnpm build
 
       - name: Test packages
         run: pnpm test
 
+      - name: Build packages
+        run: pnpm build
 
-
-# name: Test
-
-# on:
-#   push:
-#     paths-ignore:
-#       - 'docs/**'
-#       - 'README.md'
-#       - 'LICENSE'
-#       - '.editorconfig'
-#     branches:
-#       - master
-#   pull_request:
-#     paths-ignore:
-#       - 'docs/**'
-#       - 'README.md'
-#       - 'LICENSE'
-#       - '.editorconfig'
-#     branches:
-#       - master
-
-# jobs:
-#   test:
-#     runs-on: ${{ matrix.os }}
-#     strategy:
-#       matrix:
-#         os:
-#           - ubuntu-latest
-#           - windows-latest
-#         node: [12.x, 14.x, 16.x]
-
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node }}
-#       - name: Install modules
-#         run: yarn
-#       - name: Run tests
-#         run: pnpm test
