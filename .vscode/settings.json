@@ -1,0 +1,8 @@
+{
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "typescript.tsserver.log": "verbose",
+  "git.branchProtection": ["master"],
+  "git.branchRandomName.enable": true
+}
