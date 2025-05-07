@@ -39,7 +39,7 @@ jobs:
         run: pnpm install
 
       - name: Test packages
-        run: pnpm test
+        run: pnpx vitest --run
 
       - name: Build packages
         run: pnpm build
