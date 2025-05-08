@@ -1,6 +1,144 @@
 import { type Claims } from "wikibase-sdk";
 
 export const claims: Claims = {
+  P569: [
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P569",
+        hash: "e80d845c8bf6c2e47bdc5f85c11ab21d0f2c9a75",
+        datavalue: {
+          value: {
+            time: "+1879-03-14T00:00:00Z",
+            timezone: 0,
+            before: 0,
+            after: 0,
+            precision: 11,
+            calendarmodel: "http://www.wikidata.org/entity/Q1985727",
+          },
+          type: "time",
+        },
+        datatype: "time",
+      },
+      type: "statement",
+      id: "q937$2ecb21c3-4db1-54e8-27c4-a8a40541930c",
+      rank: "normal",
+      references: [
+        {
+          hash: "abc9457dcf728dd069b8ed5b2e1a86035cf2b679",
+          snaks: {
+            P248: [
+              {
+                snaktype: "value",
+                property: "P248",
+                hash: "019a50b7de741e0068bde41c9d9955b22a5de47b",
+                datavalue: {
+                  value: {
+                    "entity-type": "item",
+                    "numeric-id": 36578,
+                    id: "Q36578",
+                  },
+                  type: "wikibase-entityid",
+                },
+                datatype: "wikibase-item",
+              },
+            ],
+            P813: [
+              {
+                snaktype: "value",
+                property: "P813",
+                hash: "7805df7373a5e95763e019b855686d24acee918e",
+                datavalue: {
+                  value: {
+                    time: "+2014-04-09T00:00:00Z",
+                    timezone: 0,
+                    before: 0,
+                    after: 0,
+                    precision: 11,
+                    calendarmodel: "http://www.wikidata.org/entity/Q1985727",
+                  },
+                  type: "time",
+                },
+                datatype: "time",
+              },
+            ],
+          },
+          "snaks-order": ["P248", "P813"],
+        },
+        {
+          hash: "6232039e6623c9001eaf5e2b1ed8dabbcdc3eb25",
+          snaks: {
+            P854: [
+              {
+                snaktype: "value",
+                property: "P854",
+                hash: "d166320e8592653555e6312f9dfb6e66dc35d93e",
+                datavalue: {
+                  value: "https://www.ige.ch/de/ueber-uns/einstein.html",
+                  type: "string",
+                },
+                datatype: "url",
+              },
+            ],
+          },
+          "snaks-order": ["P854"],
+        },
+        {
+          hash: "81879642224ecc141500846bdf64e0cc71170210",
+          snaks: {
+            P248: [
+              {
+                snaktype: "value",
+                property: "P248",
+                hash: "def9f19d84b65167a2a17ce38364d264c16127fc",
+                datavalue: {
+                  value: {
+                    "entity-type": "item",
+                    "numeric-id": 19938912,
+                    id: "Q19938912",
+                  },
+                  type: "wikibase-entityid",
+                },
+                datatype: "wikibase-item",
+              },
+            ],
+            P268: [
+              {
+                snaktype: "value",
+                property: "P268",
+                hash: "7502b674b3ce130a850c3ff68487516dcbadd7f2",
+                datavalue: {
+                  value: "119016075",
+                  type: "string",
+                },
+                datatype: "external-id",
+              },
+            ],
+            P813: [
+              {
+                snaktype: "value",
+                property: "P813",
+                hash: "d6162a1716489623c6e595e448b17f8dca4fb2e8",
+                datavalue: {
+                  value: {
+                    time: "+2015-10-10T00:00:00Z",
+                    timezone: 0,
+                    before: 0,
+                    after: 0,
+                    precision: 11,
+                    calendarmodel: "http://www.wikidata.org/entity/Q1985727",
+                  },
+                  type: "time",
+                },
+                datatype: "time",
+              },
+            ],
+          },
+          "snaks-order": ["P248", "P268", "P813"],
+        },
+      ],
+    },
+  ],
   P1280: [
     {
       type: "statement",

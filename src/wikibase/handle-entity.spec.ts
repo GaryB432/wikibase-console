@@ -6,7 +6,7 @@ import { type Entities } from "wikibase-sdk";
 
 const fetchDate = new Date(2050, 0, 1);
 
-const table = new Map<string, Entities>([
+const baseMap = new Map<string, Entities>([
   [
     "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims",
     {
@@ -30,7 +30,6 @@ const table = new Map<string, Entities>([
   ],
 ]);
 
-// Mock the axios module
 vi.mock("axios");
 
 test("gets person", async () => {
@@ -38,7 +37,7 @@ test("gets person", async () => {
   const mockGet = axios.get as Mock;
 
   mockGet.mockImplementation(async (url: string) => {
-    const entities = table.get(url);
+    const entities = baseMap.get(url);
     if (!entities) {
       console.log(url);
       throw new Error("mock axios 404", { cause: url });
