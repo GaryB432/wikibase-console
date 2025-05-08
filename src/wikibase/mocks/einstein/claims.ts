@@ -1,14 +1,4 @@
-import { Claims, Entities } from "wikibase-sdk";
-
-export function greet(name: string): string {
-  return `claims says: hello to ${name}`;
-}
-export function add(a: number, b: number): number {
-  return a + b;
-}
-export const meaning: { life: number } = {
-  life: 42,
-};
+import { type Claims } from "wikibase-sdk";
 
 export const claims: Claims = {
   P1280: [
@@ -32,7 +22,8 @@ export const claims: Claims = {
   ],
 };
 
-const allClaims = {
+// eslint-disable-next-line
+const lottaClaims = {
   P1280: [
     {
       mainsnak: {
