@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 // Main interface for person information
 
 export interface PersonInfo {
