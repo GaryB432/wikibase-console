@@ -55,7 +55,8 @@ test("gets person", async () => {
   const person = await handlePerson("Q9847", { fetchDate });
   expect(person).toEqual({
     aliases: [],
-    birthYear: 0,
+    birthYear: 1879,
+    deathYear: 1955,
     fetchDate,
     id: "Q376150",
     name: "International Telecommunication Union",

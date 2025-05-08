@@ -20,6 +20,7 @@ export async function handlePerson(
     name: "",
     id: "",
     birthYear: 0,
+    deathYear: undefined,
     occupations: [],
     schools: [],
     fetchDate: options?.fetchDate ?? new Date(),
@@ -80,10 +81,14 @@ export async function handlePerson(
                 if (mainsnak.datavalue.type === "time") {
                   console.log(claimName(mainsnak.property));
                   if (mainsnak.property === P.DATE_OF_BIRTH) {
-                    console.log(
-                      wikibaseTimeToDateObject(mainsnak.datavalue.value.time),
-                      "bd9o854"
-                    );
+                    personInfo.birthYear = wikibaseTimeToDateObject(
+                      mainsnak.datavalue.value.time
+                    ).getFullYear();
+                  }
+                  if (mainsnak.property === P.DATE_OF_DEATH) {
+                    personInfo.deathYear = wikibaseTimeToDateObject(
+                      mainsnak.datavalue.value.time
+                    ).getFullYear();
                   }
                 }
                 break;
@@ -96,11 +101,12 @@ export async function handlePerson(
           }
           //   console.log(entityIdSet, "flsd7865");
 
-          const moreUrls = wbk.getManyEntities({
-            ids: [...entityIdSet.values()],
-            languages: [language],
-            props: ["labels"],
-          });
+          // const moreUrls = wbk.getManyEntities({
+          //   ids: [...entityIdSet.values()],
+          //   languages: [language],
+          //   props: ["labels"],
+          // });
+          const moreUrls: string[] = [];
           for (const labelsUrls of moreUrls.slice(0, 4)) {
             const m = await axios.get<{
               entities: Entities;

@@ -5,7 +5,7 @@ export const claims: Claims = {
     {
       mainsnak: {
         snaktype: "value",
-        property: "P569",
+        property: "P569", // DATE_OF_BIRTH
         hash: "e80d845c8bf6c2e47bdc5f85c11ab21d0f2c9a75",
         datavalue: {
           value: {
@@ -135,6 +135,126 @@ export const claims: Claims = {
             ],
           },
           "snaks-order": ["P248", "P268", "P813"],
+        },
+      ],
+    },
+  ],
+  P570: [
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P570",
+        hash: "9c234eae7ea4449f273c9b68e44aaee221e0d0f8",
+        datavalue: {
+          value: {
+            time: "+1955-04-18T00:00:00Z",
+            timezone: 0,
+            before: 0,
+            after: 0,
+            precision: 11,
+            calendarmodel: "http://www.wikidata.org/entity/Q1985727",
+          },
+          type: "time",
+        },
+        datatype: "time",
+      },
+      type: "statement",
+      id: "q937$577aaeb4-4ce9-fdd1-791f-78d893a0e5a8",
+      rank: "normal",
+      references: [
+        {
+          hash: "abc9457dcf728dd069b8ed5b2e1a86035cf2b679",
+          snaks: {
+            P248: [
+              {
+                snaktype: "value",
+                property: "P248",
+                hash: "019a50b7de741e0068bde41c9d9955b22a5de47b",
+                datavalue: {
+                  value: {
+                    "entity-type": "item",
+                    "numeric-id": 36578,
+                    id: "Q36578",
+                  },
+                  type: "wikibase-entityid",
+                },
+                datatype: "wikibase-item",
+              },
+            ],
+            P813: [
+              {
+                snaktype: "value",
+                property: "P813",
+                hash: "7805df7373a5e95763e019b855686d24acee918e",
+                datavalue: {
+                  value: {
+                    time: "+2014-04-09T00:00:00Z",
+                    timezone: 0,
+                    before: 0,
+                    after: 0,
+                    precision: 11,
+                    calendarmodel: "http://www.wikidata.org/entity/Q1985727",
+                  },
+                  type: "time",
+                },
+                datatype: "time",
+              },
+            ],
+          },
+          "snaks-order": ["P248", "P813"],
+        },
+        {
+          hash: "94ef295c137fa7ade20ac61f06b65ed6fd4d8e36",
+          snaks: {
+            P958: [
+              {
+                snaktype: "value",
+                property: "P958",
+                hash: "7a908714e094c32959cc3edc8271a843c6b192a7",
+                datavalue: {
+                  value: "Эйнштейн Альберт",
+                  type: "string",
+                },
+                datatype: "string",
+              },
+            ],
+            P248: [
+              {
+                snaktype: "value",
+                property: "P248",
+                hash: "6ff2cf2f32fe6bf566da4c3c6e2d0ae639ecef93",
+                datavalue: {
+                  value: {
+                    "entity-type": "item",
+                    "numeric-id": 17378135,
+                    id: "Q17378135",
+                  },
+                  type: "wikibase-entityid",
+                },
+                datatype: "wikibase-item",
+              },
+            ],
+            P813: [
+              {
+                snaktype: "value",
+                property: "P813",
+                hash: "257d05ea12cb52ad821eebdba59a493d541a923f",
+                datavalue: {
+                  value: {
+                    time: "+2015-09-28T00:00:00Z",
+                    timezone: 0,
+                    before: 0,
+                    after: 0,
+                    precision: 11,
+                    calendarmodel: "http://www.wikidata.org/entity/Q1985727",
+                  },
+                  type: "time",
+                },
+                datatype: "time",
+              },
+            ],
+          },
+          "snaks-order": ["P958", "P248", "P813"],
         },
       ],
     },
