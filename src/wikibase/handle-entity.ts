@@ -58,7 +58,8 @@ export async function handlePerson(
     if (entity.type === "item" && entity.claims) {
       personInfo.id = entity.id;
       if (entity.labels) {
-        personInfo.name = entity.labels[language]?.value || "dunno";
+        personInfo.wikipediaTitle = personInfo.name =
+          entity.labels[language]?.value || "dunno";
         // console.log(entity.labels[language]?.value);
       }
 
