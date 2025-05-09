@@ -66,7 +66,7 @@ test("gets person", async () => {
     occupations: [],
     schools: [],
     sources: [],
-    wikipediaTitle: "G. W. Testerton",
+    wikipediaTitle: "Fakey F. McFakerson Ⅴ",
   });
 
   // Ensure axios.get was called with the correct URL
