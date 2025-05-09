@@ -21,7 +21,7 @@ const baseMap = new Map<string, Entities>([
         labels: {
           en: {
             language: "en",
-            value: "International Telecommunication Union",
+            value: "G. W. Testerton",
           },
         },
         claims,
@@ -58,11 +58,11 @@ test("gets person", async () => {
     deathYear: 1955,
     fetchDate,
     id: "Q9847",
-    name: "International Telecommunication Union",
+    name: "G. W. Testerton",
     occupations: [],
     schools: [],
     sources: [],
-    wikipediaTitle: "International Telecommunication Union",
+    wikipediaTitle: "G. W. Testerton",
   });
 
   // Ensure axios.get was called with the correct URL
