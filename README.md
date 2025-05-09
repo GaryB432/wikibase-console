@@ -1,11 +1,13 @@
 # Wikibase Console
 
+![Just My Happy Project](https://img.shields.io/badge/Just%20My-Happy%20Project-ff69b4)
+![Don't Expect Much](https://img.shields.io/badge/Don't%20Expect-Much%2C%20It's%20Just%20Fun!-a020f0)
+![GitHub branch check runs](https://img.shields.io/github/check-runs/GaryB432/wikibase-console/master)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
-![GitHub branch check runs](https://img.shields.io/github/check-runs/GaryB432/wbk-console/master)
 
 ESM command line app for exploring the [Wikibase API](https://www.mediawiki.org/wiki/Wikibase/API).
+
+Most of my repos are private but I wanted to show my friends.
 
 ## References
 
