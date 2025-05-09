@@ -11,7 +11,7 @@ const baseMap = new Map<string, Entities>([
     "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims",
     {
       Q9847: {
-        pageid: 357966,
+        pageid: 350001,
         ns: 0,
         title: "Q9847",
         lastrevid: 2332723365,
@@ -21,7 +21,11 @@ const baseMap = new Map<string, Entities>([
         labels: {
           en: {
             language: "en",
-            value: "G. W. Testerton",
+            value: "Fakey F. McFakerson Ⅴ",
+          },
+          fr: {
+            language: "fr",
+            value: "Uniquement pour le plaisir",
           },
         },
         claims,
@@ -58,11 +62,11 @@ test("gets person", async () => {
     deathYear: 1955,
     fetchDate,
     id: "Q9847",
-    name: "G. W. Testerton",
+    name: "Fakey F. McFakerson Ⅴ",
     occupations: [],
     schools: [],
     sources: [],
-    wikipediaTitle: "G. W. Testerton",
+    wikipediaTitle: "Fakey F. McFakerson Ⅴ",
   });
 
   // Ensure axios.get was called with the correct URL
