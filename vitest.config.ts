@@ -1,12 +1,12 @@
-import { coverageConfigDefaults, defineConfig } from "vitest/config";
 import { fileURLToPath, URL } from "node:url";
+import { coverageConfigDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.{test,spec}.{js,ts}"],
     coverage: {
-      ...coverageConfigDefaults, // Spread the default coverage options
+      ...coverageConfigDefaults,
       // exclude: [
       //   "**/*.config.{js,ts}",
       //   ...coverageConfigDefaults.exclude,
@@ -19,4 +19,3 @@ export default defineConfig({
     },
   },
 });
-

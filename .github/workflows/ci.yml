@@ -1,16 +1,14 @@
-# Yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: CI
+# This workflow uses pnpm to install dependencies, run tests, and check coverage.
+# It's broken into separate jobs for checkout, build, test, and lint.
+# It detects the package manager from package.json
+
+name: Vitest with pnpm
 
 on:
   push:
-    branches:
-      - development
-      - master
-
+    branches: ["master"]
   pull_request:
-    types:
-      - opened
-      - synchronize
+    branches: ["master"]
 
 env:
   NODE_VERSION: 22
