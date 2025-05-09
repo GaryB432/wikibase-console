@@ -11,61 +11,26 @@ on:
     branches: ["master"]
 
 env:
-  NODE_VERSION: "22" # Use a variable for the Node.js version
+  NODE_VERSION: 22
 
 jobs:
-  checkout:
+  test:
     runs-on: ubuntu-latest
-    outputs:
-      commit_sha: ${{ steps.git_info.outputs.commit_sha }}
-      branch: ${{ steps.git_info.outputs.branch }}
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - id: git_info
-        run: |
-          echo "::set-output name=commit_sha::$(git rev-parse HEAD)"
-          echo "::set-output name=branch::$(git rev-parse --abbrev-ref HEAD)"
-      - uses: actions/setup-node@v4 # Setup Node.js once here
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: ${{ env.NODE_VERSION }} # Use the variable
+          run_install: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
           cache: "pnpm"
 
-  build:
-    needs: checkout
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup pnpm and install dependencies
-        uses: pnpm/action-setup@v2
-        with:
-          run_install: true
-      - name: Build project
-        run: pnpm exec tsc
+      - run: pnpm exec eslint .
 
-  test:
-    needs: checkout # Changed from needs: build to needs: checkout
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup pnpm and install dependencies
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: true
-      - name: Run Vitest tests
-        run: pnpm exec vitest run --coverage
-        if: always()
-      # - name: Upload coverage to Codecov
-      #   uses: codecov/codecov-action@v3
-      #   if: always()
+      - run: pnpm exec tsc --noEmit
 
-  lint:
-    needs: checkout
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup pnpm and install dependencies
-        uses: pnpm/action-setup@v2
-        with:
-          run_install: true
-      - name: Run ESLint
-        run: pnpm exec eslint .
-      - name: Run TypeScript Type Check
-        run: pnpm exec tsc --noEmit
+      - run: pnpm exec vitest run

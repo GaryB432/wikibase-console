@@ -2,7 +2,7 @@ import { expect, test, vi, type Mock } from "vitest";
 import axios from "axios";
 import { handlePerson } from "./handle-entity.js";
 import { claims } from "./mocks/einstein/claims.js";
-import { Entities } from "wikibase-sdk";
+import { type Entities } from "wikibase-sdk";
 
 const fetchDate = new Date(2050, 0, 1);
 

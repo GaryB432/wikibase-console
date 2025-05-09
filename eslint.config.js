@@ -15,4 +15,7 @@ export default defineConfig([
     languageOptions: { globals: globals.browser },
   },
   tseslint.configs.recommended,
+  {
+    ignores: ["coverage", "dist", "node_modules"],
+  },
 ]);

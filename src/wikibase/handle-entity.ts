@@ -1,11 +1,18 @@
 import axios from "axios";
-import WBK, { EntityId, Entities } from "wikibase-sdk";
-import { PersonInfo } from "./types.js";
+import type { Entities, EntityId } from "wikibase-sdk";
+import WBK from "wikibase-sdk";
+import { type PersonInfo } from "./types.js";
+
+const language = "en";
+const wbk = WBK({
+  instance: "https://www.wikidata.org",
+  sparqlEndpoint: "https://query.wikidata.org/sparql",
+});
 
 export async function handlePerson(
   id: EntityId,
   options?: { fetchDate?: Date }
-) {
+): Promise<PersonInfo> {
   const personInfo: PersonInfo = {
     aliases: [],
     name: "",
@@ -23,7 +30,7 @@ export async function handlePerson(
     props: ["labels", "descriptions", "aliases", "claims"],
   });
 
-  const { data } = await axios.get<{ success: number; entities: Entities }>(
+  const { data } = await axios.get<{ entities: Entities; success: number }>(
     entitiesUrl
   );
 
@@ -42,6 +49,7 @@ export async function handlePerson(
       for (const propClaims of entityClaims) {
         for (const claim of propClaims) {
           const { mainsnak } = claim;
+          console.log(mainsnak.datatype, mainsnak.datavalue)
           // console.log(mainsnak.datavalue, "9jdl snak propClaim");
           const entityIdSet: Set<EntityId> = new Set();
 
@@ -84,8 +92,8 @@ export async function handlePerson(
           });
           for (const labelsUrls of moreUrls.slice(0, 4)) {
             const m = await axios.get<{
-              success: number;
               entities: Entities;
+              success: number;
             }>(labelsUrls);
             const { data } = m;
             if (!data.success) {
@@ -143,8 +151,3 @@ export async function handlePerson(
   }
   return personInfo;
 }
-const language = "en";
-const wbk = WBK({
-  instance: "https://www.wikidata.org",
-  sparqlEndpoint: "https://query.wikidata.org/sparql",
-});
