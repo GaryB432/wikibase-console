@@ -1,8 +1,8 @@
-import { expect, test, vi, type Mock } from "vitest";
 import axios from "axios";
+import { expect, test, vi, type Mock } from "vitest";
+import { type Entities } from "wikibase-sdk";
 import { handlePerson } from "./handle-entity.js";
 import { claims } from "./mocks/einstein/claims.js";
-import { type Entities } from "wikibase-sdk";
 
 const fetchDate = new Date(2050, 0, 1);
 
@@ -54,7 +54,6 @@ test("gets person", async () => {
 
   const person = await handlePerson("Q9847", { fetchDate });
   expect(person).toEqual({
-    aliases: [],
     birthYear: 1879,
     deathYear: 1955,
     fetchDate,
@@ -70,6 +69,8 @@ test("gets person", async () => {
     "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims"
   );
 });
+
+test("Comprehsive Einstein", () => {});
 
 // test("fetchData should return JSON data when the API call is successful and returns JSON", async () => {
 //   const mockResponseData = { message: "hello-world", status: "success" };

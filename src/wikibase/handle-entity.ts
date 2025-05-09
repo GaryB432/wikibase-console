@@ -16,15 +16,29 @@ export async function handlePerson(
   options?: { fetchDate?: Date }
 ): Promise<PersonInfo> {
   const personInfo: PersonInfo = {
-    aliases: [],
-    name: "",
-    id: "",
+    // aliases: [],
+    // awards: [],
     birthYear: 0,
-    deathYear: undefined,
-    occupations: [],
-    schools: [],
+    // children: [],
+    // deathYear: NaN,
+    // description: "",
+    // employers: [],
     fetchDate: options?.fetchDate ?? new Date(),
+    // fieldOfWork: [],
+    // gender: "",
+    id: "",
+    // image: "",
+    name: "",
+    // nationality: [],
+    // notableWorks: [],
+    occupations: [],
+    // parents: [],
+    // placeOfBirth: "",
+    // placeOfDeath: "",
+    schools: [],
     sources: [],
+    // spouses: [],
+    // wikipediaTitle: "",
   };
 
   const entitiesUrl = wbk.getEntities({
