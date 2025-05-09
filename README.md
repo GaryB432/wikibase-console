@@ -62,3 +62,7 @@ Most of my repos are private but this one is in front of my [loyal followers](ht
 | P551 | [RESIDENCE](https://www.wikidata.org/wiki/Property:P551) | Residence | 
 | P26 | [SPOUSE](https://www.wikidata.org/wiki/Property:P26) | Spouse | 
 | P2002 | [TWITTER_USERNAME](https://www.wikidata.org/wiki/Property:P2002) | Twitter username |
+
+## LLM commit messages
+
+Almost all the code is my own but I am not authoring any of the commit messages myself.
