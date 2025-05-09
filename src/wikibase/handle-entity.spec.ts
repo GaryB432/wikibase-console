@@ -1,8 +1,8 @@
-import { expect, test, vi, type Mock } from "vitest";
 import axios from "axios";
+import { expect, test, vi, type Mock } from "vitest";
+import { type Entities } from "wikibase-sdk";
 import { handlePerson } from "./handle-entity.js";
 import { claims } from "./mocks/einstein/claims.js";
-import { type Entities } from "wikibase-sdk";
 
 const fetchDate = new Date(2050, 0, 1);
 
@@ -58,7 +58,6 @@ test("gets person", async () => {
 
   const person = await handlePerson("Q9847", { fetchDate });
   expect(person).toEqual({
-    aliases: [],
     birthYear: 1879,
     deathYear: 1955,
     fetchDate,
@@ -67,6 +66,7 @@ test("gets person", async () => {
     occupations: [],
     schools: [],
     sources: [],
+    wikipediaTitle: "G. W. Testerton",
   });
 
   // Ensure axios.get was called with the correct URL
