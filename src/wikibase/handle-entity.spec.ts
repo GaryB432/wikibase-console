@@ -70,8 +70,6 @@ test("gets person", async () => {
   );
 });
 
-test("Comprehsive Einstein", () => {});
-
 // test("fetchData should return JSON data when the API call is successful and returns JSON", async () => {
 //   const mockResponseData = { message: "hello-world", status: "success" };
 //   (axios.get as Mock).mockResolvedValue({
