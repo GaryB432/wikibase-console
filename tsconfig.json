@@ -17,10 +17,7 @@
     /* Directory */
     "outDir": "dist",
     "rootDir": "./src",
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"]
-    }
+    "baseUrl": "./src"
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.spec.ts"]
