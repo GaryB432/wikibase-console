@@ -61,6 +61,7 @@ test("gets person", async () => {
     birthYear: 1879,
     deathYear: 1955,
     fetchDate,
+    fieldOfWork: ["Anonymity", "Unit Testing"],
     id: "Q9847",
     name: "Fakey F. McFakerson Ⅴ",
     occupations: [],

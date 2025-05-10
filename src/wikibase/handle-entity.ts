@@ -24,7 +24,7 @@ export async function handlePerson(
     // description: "",
     // employers: [],
     fetchDate: options?.fetchDate ?? new Date(),
-    // fieldOfWork: [],
+    fieldOfWork: [],
     // gender: "",
     id: "",
     // image: "",
