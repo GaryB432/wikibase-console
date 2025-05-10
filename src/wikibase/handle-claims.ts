@@ -8,13 +8,15 @@ import {
 import { WIKIDATA_PERSON_PROPERTIES as P } from "./constants.js";
 import { type PersonInfo } from "./types.js";
 
+const CONORID: EntityId = "P1280"; // identifier in the National and University Library, Ljubljana database
+
 function claimName(property: string): string {
   return `[prop [${property}]]`;
 }
 
 export async function handlePropertyClaims(
   entity: Item,
-  personInfo: PersonInfo,
+  personInfo: PersonInfo
 ): Promise<void> {
   for (const propClaims of Object.values(entity.claims ?? {})) {
     for (const claim of propClaims) {
@@ -27,6 +29,14 @@ export async function handlePropertyClaims(
       const entityIdSet: Set<EntityId> = new Set();
 
       switch (mainsnak.datatype) {
+        case "external-id": {
+          if (mainsnak.datavalue.type === "string") {
+            if (mainsnak.property === CONORID) {
+              console.log(mainsnak.datavalue.value, "stubbed value");
+            }
+          }
+          break;
+        }
         case "wikibase-item": {
           if (mainsnak.datavalue.type === "wikibase-entityid") {
             // console.log(mainsnak.datavalue, "f85");
@@ -34,30 +44,29 @@ export async function handlePropertyClaims(
           }
           break;
         }
-        case "globe-coordinate":
-        case "geo-shape":
-        case "string":
-        case "url":
-        case "external-id":
-        case "monolingualtext":
-        case "commonsMedia":
-        case "quantity": {
-          break;
-        }
         case "time": {
           if (mainsnak.datavalue.type === "time") {
             console.log(claimName(mainsnak.property));
             if (mainsnak.property === P.DATE_OF_BIRTH) {
               personInfo.birthYear = wikibaseTimeToDateObject(
-                mainsnak.datavalue.value.time,
+                mainsnak.datavalue.value.time
               ).getFullYear();
             }
             if (mainsnak.property === P.DATE_OF_DEATH) {
               personInfo.deathYear = wikibaseTimeToDateObject(
-                mainsnak.datavalue.value.time,
+                mainsnak.datavalue.value.time
               ).getFullYear();
             }
           }
+          break;
+        }
+        case "globe-coordinate":
+        case "geo-shape":
+        case "string":
+        case "url":
+        case "monolingualtext":
+        case "commonsMedia":
+        case "quantity": {
           break;
         }
         default: {
