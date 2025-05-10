@@ -13,7 +13,7 @@ const wbk = WBK({
 
 export async function handlePerson(
   id: EntityId,
-  options?: { fetchDate?: Date }
+  options?: { fetchDate?: Date },
 ): Promise<PersonInfo> {
   const personInfo: PersonInfo = {
     // aliases: [],
@@ -50,7 +50,7 @@ export async function handlePerson(
   });
 
   const { data } = await axios.get<{ entities: Entities; success: number }>(
-    entitiesUrl
+    entitiesUrl,
   );
 
   if (data.success && Object.keys(data.entities).length === 1) {
@@ -99,12 +99,12 @@ export async function handlePerson(
                   console.log(claimName(mainsnak.property));
                   if (mainsnak.property === P.DATE_OF_BIRTH) {
                     personInfo.birthYear = wikibaseTimeToDateObject(
-                      mainsnak.datavalue.value.time
+                      mainsnak.datavalue.value.time,
                     ).getFullYear();
                   }
                   if (mainsnak.property === P.DATE_OF_DEATH) {
                     personInfo.deathYear = wikibaseTimeToDateObject(
-                      mainsnak.datavalue.value.time
+                      mainsnak.datavalue.value.time,
                     ).getFullYear();
                   }
                 }

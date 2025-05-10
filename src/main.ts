@@ -19,5 +19,5 @@ handlePerson(EINSTEIN_Q).then(
   },
   (e) => {
     console.log("nope", e);
-  }
+  },
 );
