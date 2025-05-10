@@ -143,7 +143,7 @@ export const claims: Claims = {
     {
       mainsnak: {
         snaktype: "value",
-        property: "P570",
+        property: "P570", // DATE_OF_DEATH
         hash: "9c234eae7ea4449f273c9b68e44aaee221e0d0f8",
         datavalue: {
           value: {
@@ -276,6 +276,51 @@ export const claims: Claims = {
       "qualifiers-order": ["P1810"],
       id: "Q937$2271da52-4ee1-6a74-8d99-294bc3f6c7de",
       rank: "normal",
+    },
+  ],
+  P101: [
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P101", // FIELD_OF_WORK
+        hash: "996fbf8c041a60ba898362a7b3b64b5219957d99",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            "numeric-id": 18362,
+            id: "Q18362",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+      id: "Q937$7267cb07-4fed-ba1d-d28f-bb82e7faf4ad",
+      rank: "normal",
+      references: [
+        {
+          hash: "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+          snaks: {
+            P143: [
+              {
+                snaktype: "value",
+                property: "P143",
+                hash: "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                datavalue: {
+                  value: {
+                    "entity-type": "item",
+                    "numeric-id": 206855,
+                    id: "Q206855",
+                  },
+                  type: "wikibase-entityid",
+                },
+                datatype: "wikibase-item",
+              },
+            ],
+          },
+          "snaks-order": ["P143"],
+        },
+      ],
     },
   ],
 };
