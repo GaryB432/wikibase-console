@@ -41,6 +41,8 @@ export async function handlePerson(
     // wikipediaTitle: "",
   };
 
+  const fieldOfWork = ["Anonymity", "Unit Testing"];
+
   const entitiesUrl = wbk.getEntities({
     ids: [id],
     languages: [language],
@@ -114,6 +116,8 @@ export async function handlePerson(
               }
             }
           }
+
+          personInfo.fieldOfWork = fieldOfWork;
           //   console.log(entityIdSet, "flsd7865");
 
           // const moreUrls = wbk.getManyEntities({
