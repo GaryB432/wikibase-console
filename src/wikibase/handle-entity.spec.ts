@@ -71,7 +71,7 @@ test("gets person", async () => {
 
   // Ensure axios.get was called with the correct URL
   expect(axios.get).toHaveBeenCalledWith(
-    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims"
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims",
   );
 });
 
