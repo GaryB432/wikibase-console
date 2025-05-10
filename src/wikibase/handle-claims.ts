@@ -14,7 +14,7 @@ function claimName(property: string): string {
 
 export async function handlePropertyClaims(
   entity: Item,
-  personInfo: PersonInfo
+  personInfo: PersonInfo,
 ): Promise<void> {
   for (const propClaims of Object.values(entity.claims ?? {})) {
     for (const claim of propClaims) {
@@ -49,12 +49,12 @@ export async function handlePropertyClaims(
             console.log(claimName(mainsnak.property));
             if (mainsnak.property === P.DATE_OF_BIRTH) {
               personInfo.birthYear = wikibaseTimeToDateObject(
-                mainsnak.datavalue.value.time
+                mainsnak.datavalue.value.time,
               ).getFullYear();
             }
             if (mainsnak.property === P.DATE_OF_DEATH) {
               personInfo.deathYear = wikibaseTimeToDateObject(
-                mainsnak.datavalue.value.time
+                mainsnak.datavalue.value.time,
               ).getFullYear();
             }
           }
