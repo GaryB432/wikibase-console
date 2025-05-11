@@ -94,7 +94,7 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
     // Filter out any claims that don't have a simple value (e.g., if the claim is a complex object).
     const schoolEntityIds = Array.isArray(simplifiedClaims)
       ? simplifiedClaims.filter(
-          (claim): claim is string => typeof claim === "string"
+          (claim): claim is EntityId => typeof claim === "string"
         )
       : [];
 
@@ -105,7 +105,6 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
     const schoolEntitiesUrl = wbk.getEntities({
       ids: schoolEntityIds,
       languages: [language],
-      // props: ["labels", "descriptions", "aliases", "claims"],
       props: ["labels"],
     });
     // const schoolEntitiesUrl = `${WB_URL}/w/api.php?action=wbgetentities&props=labels&ids=${schoolEntityIds.join(
@@ -117,7 +116,7 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
 
     // Extract the school names from the entities data.
     const schoolNames: string[] = schoolEntityIds.map((schoolEntityId) => {
-      const schoolEntity: Entity | undefined =
+      const schoolEntity: Item | undefined =
         schoolEntitiesData.entities[schoolEntityId];
       return schoolEntity?.labels?.en?.value || schoolEntityId;
     });
