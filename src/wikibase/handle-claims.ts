@@ -1,10 +1,8 @@
 import axios from "axios";
 import WBK, {
-  Claim,
-  type Entity,
+  type Claim,
   type EntityId,
   type Item,
-  SimplifiedClaims,
   simplifyClaims,
   wikibaseTimeToDateObject,
 } from "wikibase-sdk";
@@ -135,24 +133,6 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
     throw error; // Re-throw the error to be caught by the caller.
   }
 };
-
-// Example usage: Call the function and print the results.
-(async () => {
-  try {
-    const schools = await getSchoolsAttended(einsteinEntityId);
-    if (schools.length > 0) {
-      console.log(`Schools attended by ${einsteinEntityId} (Albert Einstein):`);
-      schools.forEach((school) => console.log(`- ${school}`));
-    } else {
-      console.log(
-        `No schools attended found for ${einsteinEntityId} (Albert Einstein).`
-      );
-    }
-  } catch (error) {
-    // Handle any errors that occurred during the process.
-    console.error("Failed to get schools attended:", error);
-  }
-})();
 
 // Example usage: Call the function and print the results.
 (async () => {

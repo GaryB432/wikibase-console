@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { beforeAll, describe, expect, test } from "vitest";
 import { handlePropertyClaims } from "./handle-claims";
 import { type PersonInfo } from "./types";
