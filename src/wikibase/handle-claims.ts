@@ -1,7 +1,6 @@
 import axios from "axios";
-import {
-  
-  type Entities,
+import WBK, {
+  type Entity,
   type EntityId,
   type Item,
   simplifyClaims,
@@ -9,6 +8,12 @@ import {
 } from "wikibase-sdk";
 import { WIKIDATA_PERSON_PROPERTIES as P } from "./constants.js";
 import { type PersonInfo } from "./types.js";
+
+const language = "en";
+const wbk = WBK({
+  instance: "https://www.wikidata.org",
+  sparqlEndpoint: "https://query.wikidata.org/sparql",
+});
 
 const CONORID: EntityId = "P1280"; // identifier in the National and University Library, Ljubljana database
 
@@ -29,11 +34,33 @@ const einsteinEntityId = "Q937";
  * @param entityId - The Wikidata entity ID to query.
  * @returns A Promise that resolves to an array of simplified school names, or an empty array if no schools are found.
  */
-const getSchoolsAttended = async (entityId: string): Promise<string[]> => {
+const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
   try {
+
+    // const { data } = await axios.get<{ entities: Entities; success: number }>(
+    //   entitiesUrl
+    // );
+
+    // if (data.success && Object.keys(data.entities).length === 1) {
+    //   const entity = Object.values(data.entities)[0]!;
+    //   // console.log(JSON.stringify(entity));
+
+    //   if (entity.type === "item") {
+    //     personInfo.id = entity.id;
+    //     handleLabels(entity, personInfo);
+
+    //     await handlePropertyClaims(entity, personInfo);
+    //   }
+    // }
+
     // Construct the URL to query the Wikidata API for the specified entity.
-    // WB_URL is provided by wikibase-sdk for the base URL.
-    const url = `${WB_URL}/w/api.php?action=wbgetentities&props=claims&ids=${entityId}&format=json`;
+    // WB_URL is provided by wikibase-sdk for the base URL. NO IT SEEMS NOT TO BE
+    // const url = `${WB_URL}/w/api.php?action=wbgetentities&props=claims&ids=${entityId}&format=json`;
+    const url = wbk.getEntities({
+      ids: [entityId],
+      languages: [language],
+      props: ["labels", "descriptions", "aliases", "claims"],
+    });
 
     // Make the API request using axios.
     const response = await axios.get(url);
@@ -48,7 +75,7 @@ const getSchoolsAttended = async (entityId: string): Promise<string[]> => {
       return []; // Return an empty array to indicate no schools found.
     }
 
-    const entity: Entity = data.entities[entityId]; // Type from wikibase-sdk
+    const entity: Item = data.entities[entityId]; // Type from wikibase-sdk
 
     // Extract the claims for the entity.  Claims are statements about the entity.
     // For "schools attended", the property is P69.
