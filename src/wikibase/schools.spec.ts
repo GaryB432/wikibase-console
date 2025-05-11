@@ -1,20 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { expect, Mocked, MockedFunction, test, vi } from "vitest";
-import WBK, {
-    SimplifiedClaims,
-    simplifyClaims,
+// import WBK, {
+//     SimplifiedClaims,
+//     simplifyClaims,
     
-    type Claim,
-    type EntityId,
-    type Item
-} from "wikibase-sdk";
+//     type Claim,
+//     type EntityId,
+//     type Item
+// } from "wikibase-sdk";
 
-const language = "en";
-const wbk = WBK({
-  instance: "https://www.wikidata.org",
-  sparqlEndpoint: "https://query.wikidata.org/sparql",
-});
+// import {getEntities} from 'wikibase-sdk'
+
+// const language = "en";
+// const wbk = WBK({
+//   instance: "https://www.wikidata.org",
+//   sparqlEndpoint: "https://query.wikidata.org/sparql",
+// });
 
 /**
  * Uses the Wikidata API and wikibase-sdk to simplify the process and leverages type discrimination.
