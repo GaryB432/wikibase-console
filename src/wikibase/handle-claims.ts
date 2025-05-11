@@ -92,17 +92,26 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
     const simplifiedClaims = simplifyClaims(claims);
 
     // Filter out any claims that don't have a simple value (e.g., if the claim is a complex object).
-    const schoolEntityIds: string[] = simplifiedClaims.filter(
-      (claim): claim is string => typeof claim === "string"
-    );
+    const schoolEntityIds = Array.isArray(simplifiedClaims)
+      ? simplifiedClaims.filter(
+          (claim): claim is string => typeof claim === "string"
+        )
+      : [];
 
     if (schoolEntityIds.length === 0) {
       return [];
     }
     // Fetch the entity data for the schools (the values of the P69 claims).
-    const schoolEntitiesUrl = `${WB_URL}/w/api.php?action=wbgetentities&props=labels&ids=${schoolEntityIds.join(
-      "|"
-    )}&format=json`;
+    const schoolEntitiesUrl = wbk.getEntities({
+      ids: schoolEntityIds,
+      languages: [language],
+      // props: ["labels", "descriptions", "aliases", "claims"],
+      props: ["labels"],
+    });
+    // const schoolEntitiesUrl = `${WB_URL}/w/api.php?action=wbgetentities&props=labels&ids=${schoolEntityIds.join(
+    //   "|"
+    // )}&format=json`;
+    // const schoolEntitiesUrl = '';
     const schoolEntitiesResponse = await axios.get(schoolEntitiesUrl);
     const schoolEntitiesData = schoolEntitiesResponse.data;
 
