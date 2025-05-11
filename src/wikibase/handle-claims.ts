@@ -1,8 +1,10 @@
 import axios from "axios";
 import WBK, {
+  Claim,
   type Entity,
   type EntityId,
   type Item,
+  SimplifiedClaims,
   simplifyClaims,
   wikibaseTimeToDateObject,
 } from "wikibase-sdk";
@@ -22,51 +24,42 @@ function claimName(property: string): string {
 }
 
 // import axios from "axios";
-// import { WB_URL, simplifyClaims, Entity } from "wikibase-sdk"; // Import from wikibase-sdk
+// import {
+//   WB_URL,
+//   simplifyClaims,
+//   Entity,
+//   Claim,
+//   PropertyClaims,
+//   WikibaseEntityId,
+// } from "wikibase-sdk";
 
 // Define the Wikidata entity ID for Albert Einstein.
 const einsteinEntityId = "Q937";
 
 /**
  * Retrieves the schools attended by a given Wikidata entity (Albert Einstein in this case).
- * Uses the Wikidata API and wikibase-sdk to simplify the process.
+ * Uses the Wikidata API and wikibase-sdk to simplify the process and leverages type discrimination.
  *
  * @param entityId - The Wikidata entity ID to query.
  * @returns A Promise that resolves to an array of simplified school names, or an empty array if no schools are found.
  */
 const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
   try {
-
-    // const { data } = await axios.get<{ entities: Entities; success: number }>(
-    //   entitiesUrl
-    // );
-
-    // if (data.success && Object.keys(data.entities).length === 1) {
-    //   const entity = Object.values(data.entities)[0]!;
-    //   // console.log(JSON.stringify(entity));
-
-    //   if (entity.type === "item") {
-    //     personInfo.id = entity.id;
-    //     handleLabels(entity, personInfo);
-
-    //     await handlePropertyClaims(entity, personInfo);
-    //   }
-    // }
-
     // Construct the URL to query the Wikidata API for the specified entity.
-    // WB_URL is provided by wikibase-sdk for the base URL. NO IT SEEMS NOT TO BE
+    // WB_URL is provided by wikibase-sdk for the base URL.  NOT IT DOES NOT SEEM TO BE
     // const url = `${WB_URL}/w/api.php?action=wbgetentities&props=claims&ids=${entityId}&format=json`;
+
     const url = wbk.getEntities({
       ids: [entityId],
       languages: [language],
-      props: ["labels", "descriptions", "aliases", "claims"],
+      // props: ["labels", "descriptions", "aliases", "claims"],
+      props: ["claims"],
     });
 
     // Make the API request using axios.
     const response = await axios.get(url);
 
     // The response.data object contains the raw JSON response from the Wikidata API.
-    // It has a complex structure, which wikibase-sdk helps to simplify.
     const data = response.data;
 
     // Check if the entity was found in the response.
@@ -75,10 +68,9 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
       return []; // Return an empty array to indicate no schools found.
     }
 
-    const entity: Item = data.entities[entityId]; // Type from wikibase-sdk
+    const entity: Item = data.entities[entityId];
 
-    // Extract the claims for the entity.  Claims are statements about the entity.
-    // For "schools attended", the property is P69.
+    // Extract the claims for the entity.
     const claims = entity.claims;
 
     if (!claims) {
@@ -86,7 +78,7 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
       return [];
     }
 
-    const attendedSchoolClaims = claims.P69; // P69 is the property ID for "educated at"
+    const attendedSchoolClaims: Claim[] | undefined = claims.P69; // P69 is the property ID for "educated at"
 
     if (!attendedSchoolClaims) {
       console.warn(
@@ -94,10 +86,10 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
       );
       return [];
     }
-
     // Simplify the claims data using wikibase-sdk's simplifyClaims function.
     // This converts the complex claim structure into a more manageable format.
-    const simplifiedClaims = simplifyClaims(attendedSchoolClaims);
+
+    const simplifiedClaims = simplifyClaims(claims);
 
     // Filter out any claims that don't have a simple value (e.g., if the claim is a complex object).
     const schoolEntityIds: string[] = simplifiedClaims.filter(
@@ -107,7 +99,6 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
     if (schoolEntityIds.length === 0) {
       return [];
     }
-
     // Fetch the entity data for the schools (the values of the P69 claims).
     const schoolEntitiesUrl = `${WB_URL}/w/api.php?action=wbgetentities&props=labels&ids=${schoolEntityIds.join(
       "|"
@@ -119,7 +110,6 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
     const schoolNames: string[] = schoolEntityIds.map((schoolEntityId) => {
       const schoolEntity: Entity | undefined =
         schoolEntitiesData.entities[schoolEntityId];
-      // Get the English label, if available.  If not, return the ID.
       return schoolEntity?.labels?.en?.value || schoolEntityId;
     });
 
@@ -137,6 +127,24 @@ const getSchoolsAttended = async (entityId: EntityId): Promise<string[]> => {
     throw error; // Re-throw the error to be caught by the caller.
   }
 };
+
+// Example usage: Call the function and print the results.
+(async () => {
+  try {
+    const schools = await getSchoolsAttended(einsteinEntityId);
+    if (schools.length > 0) {
+      console.log(`Schools attended by ${einsteinEntityId} (Albert Einstein):`);
+      schools.forEach((school) => console.log(`- ${school}`));
+    } else {
+      console.log(
+        `No schools attended found for ${einsteinEntityId} (Albert Einstein).`
+      );
+    }
+  } catch (error) {
+    // Handle any errors that occurred during the process.
+    console.error("Failed to get schools attended:", error);
+  }
+})();
 
 // Example usage: Call the function and print the results.
 (async () => {
