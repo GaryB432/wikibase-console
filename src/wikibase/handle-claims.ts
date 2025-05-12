@@ -1,4 +1,4 @@
-import WBK, {
+import {
   type EntityId,
   type Item,
   wikibaseTimeToDateObject,
@@ -6,17 +6,7 @@ import WBK, {
 import { WIKIDATA_PERSON_PROPERTIES as P } from "./constants.js";
 import { type PersonInfo } from "./types.js";
 
-const language = "en";
-const wbk = WBK({
-  instance: "https://www.wikidata.org",
-  sparqlEndpoint: "https://query.wikidata.org/sparql",
-});
-
 const CONORID: EntityId = "P1280"; // identifier in the National and University Library, Ljubljana database
-
-function claimName(property: string): string {
-  return `[prop [${property}]]`;
-}
 
 export async function handlePropertyClaims(
   entity: Item,

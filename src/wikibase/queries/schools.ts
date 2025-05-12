@@ -1,14 +1,7 @@
-import axios from "axios";
-import * as process from "process";
-import * as wikibaseSDK from "wikibase-sdk";
-
-console.log(JSON.stringify(Object.keys(process), undefined, 1));
+import type { Entities, Item, SimplifiedPropertyClaims } from "wikibase-sdk";
+import { simplifyPropertyClaims } from "wikibase-sdk";
 
 const language = "en";
-const wbk = wikibaseSDK.WBK({
-  instance: "https://www.wikidata.org",
-  sparqlEndpoint: "https://query.wikidata.org/sparql",
-});
 
 /**
  * Retrieves the schools attended by a given Wikidata entity.
@@ -16,42 +9,13 @@ const wbk = wikibaseSDK.WBK({
  * @param entityId - The Wikidata entity ID to query.
  * @returns A Promise that resolves to an array of simplified school names, or an empty array if no schools are found.
  */
-export async function getSchoolsAttended(
-  entityId: wikibaseSDK.EntityId,
-): Promise<string[]> {
+export async function getSchoolsAttended(entity: Item): Promise<string[]> {
   try {
-    const entityUrl = wbk.getEntities({
-      ids: [entityId],
-      props: ["claims"],
-      format: "json",
-    });
 
-    // In a real implementation, you would fetch this URL with axios or fetch
-    // For testing, we'll simulate the response directly
-    // const entityData = await Promise.resolve({ entities: {} }); // This will be mocked
-
-    // const language = "en";
-    // const wbk = wikibaseSDK.WBK({
-    //   instance: "https://www.wikidata.org",
-    //   sparqlEndpoint: "https://query.wikidata.org/sparql",
-    // });
-
-    const { data: entityData } = await axios.get<{
-      entities: wikibaseSDK.Entities;
-      success: number;
-    }>(entityUrl);
-
-    if (!entityData || !entityData.entities || !entityData.entities[entityId]) {
-      console.warn(`Entity ${entityId} not found in Wikidata.`);
-      return [];
-    }
-
-    const entity = entityData.entities[entityId] as wikibaseSDK.Item;
-
-    const claims = entity.claims;
+    const { claims } = entity;
 
     if (!claims) {
-      console.warn(`No claims found for entity ${entityId}`);
+      console.warn(`No claims found for entity ${entity.id}`);
       return [];
     }
 
@@ -59,19 +23,17 @@ export async function getSchoolsAttended(
 
     if (!attendedSchoolClaims) {
       console.warn(
-        `No 'educated at' (P69) claims found for entity ${entityId}`,
+        `No 'educated at' (P69) claims found for entity ${entity.id}`
       );
       return [];
     }
 
-    // console.log(attendedSchoolClaims, "ok now");
-
-    const simplifiedClaims: wikibaseSDK.SimplifiedPropertyClaims =
-      wikibaseSDK.simplifyPropertyClaims(attendedSchoolClaims);
+    const simplifiedClaims: SimplifiedPropertyClaims =
+      simplifyPropertyClaims(attendedSchoolClaims);
 
     const schoolEntityIds = Array.isArray(simplifiedClaims)
       ? simplifiedClaims.filter(
-          (claim): claim is string => typeof claim === "string",
+          (claim): claim is string => typeof claim === "string"
         )
       : [];
 
@@ -87,25 +49,25 @@ export async function getSchoolsAttended(
 
     // const entitiesUrl = ''
 
-    const entitiesUrl = wbk.getEntities({
-      ids: schoolEntityIds.map<wikibaseSDK.EntityId>(
-        (i) => i as wikibaseSDK.EntityId,
-      ),
-      languages: [language],
-      props: ["labels"],
-    });
+    // const entitiesUrl = wbk.getEntities({
+    //   ids: schoolEntityIds.map<wikibaseSDK.EntityId>(
+    //     (i) => i as wikibaseSDK.EntityId
+    //   ),
+    //   languages: [language],
+    //   props: ["labels"],
+    // });
 
-    // In a real implementation, you would fetch this URL with axios or fetch
-    // For testing, we'll simulate the response directly
-    // const schoolEntitiesData = await Promise.resolve({ entities: {} }); // This will be mocked
-    const { data } = await axios.get<{
-      entities: wikibaseSDK.Entities;
-      success: number;
-    }>(entitiesUrl);
+    // // In a real implementation, you would fetch this URL with axios or fetch
+    // // For testing, we'll simulate the response directly
+    // // const schoolEntitiesData = await Promise.resolve({ entities: {} }); // This will be mocked
+    // const { data } = await blxios.get<{
+    //   entities: wikibaseSDK.Entities;
+    //   success: number;
+    // }>(entitiesUrl);
 
     // console.log(data);
 
-    const { entities } = data;
+    const entities: Entities = {}; // whoa these entites are needed!
 
     const schoolNames = Object.values(entities)
       .filter((a) => a.type === "item")
@@ -142,7 +104,7 @@ export async function getSchoolsAttended(
     return schoolNames;
   } catch (error) {
     console.error(
-      `Error fetching data from Wikidata: ${(error as Error).message}`,
+      `Error fetching data from Wikidata: ${(error as Error).message}`
     );
     throw error;
   }

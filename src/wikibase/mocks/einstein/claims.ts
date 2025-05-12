@@ -1,77 +1,5 @@
-import type { Claims, Qualifiers, Reference } from "wikibase-sdk";
+import type { Claims, Reference } from "wikibase-sdk";
 
-const qualifiers: Qualifiers = {
-  P512: [
-    {
-      snaktype: "value",
-      property: "P512",
-      hash: "67328753e890584b019e99ca2adbfd6c89f03d6f",
-      datavalue: {
-        value: {
-          "entity-type": "item",
-          "numeric-id": 787674,
-          id: "Q787674",
-        },
-        type: "wikibase-entityid",
-      },
-      datatype: "wikibase-item",
-    },
-  ],
-  P580: [
-    {
-      snaktype: "value",
-      property: "P580",
-      hash: "e808e45fd86c6704471903360cc4e1f4b0afb6c6",
-      datavalue: {
-        value: {
-          time: "+1896-00-00T00:00:00Z",
-          timezone: 0,
-          before: 0,
-          after: 0,
-          precision: 9,
-          calendarmodel: "http://www.wikidata.org/entity/Q1985727",
-        },
-        type: "time",
-      },
-      datatype: "time",
-    },
-  ],
-  P582: [
-    {
-      snaktype: "value",
-      property: "P582",
-      hash: "7ff7fa6a41098cf9dad92bc8ce9f6ef4cdfb964c",
-      datavalue: {
-        value: {
-          time: "+1900-00-00T00:00:00Z",
-          timezone: 0,
-          before: 0,
-          after: 0,
-          precision: 9,
-          calendarmodel: "http://www.wikidata.org/entity/Q1985727",
-        },
-        type: "time",
-      },
-      datatype: "time",
-    },
-  ],
-  P812: [
-    {
-      snaktype: "value",
-      property: "P812",
-      hash: "52f8147e0926977b48191583459f17066b3caf71",
-      datavalue: {
-        value: {
-          "entity-type": "item",
-          "numeric-id": 853077,
-          id: "Q853077",
-        },
-        type: "wikibase-entityid",
-      },
-      datatype: "wikibase-item",
-    },
-  ],
-};
 const references: Reference[] = [
   {
     hash: "6232039e6623c9001eaf5e2b1ed8dabbcdc3eb25",
@@ -160,7 +88,7 @@ const schoolClaims: Claims = {
 };
 
 export const claims: Claims = {
-  ...schoolClaims, // go here!
+  ...schoolClaims,
   P569: [
     {
       mainsnak: {
