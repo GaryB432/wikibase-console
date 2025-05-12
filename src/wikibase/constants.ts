@@ -42,5 +42,5 @@ export const WIKIDATA_PERSON_PROPERTIES = {
 };
 
 export const WIKIDATA_OTHER_PROPERTIES = {
- START_TIME: "P580", // time an entity begins to exist or a statement starts being valid
-}
+  START_TIME: "P580", // time an entity begins to exist or a statement starts being valid
+};

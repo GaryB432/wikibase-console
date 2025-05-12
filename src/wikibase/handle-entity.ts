@@ -13,7 +13,7 @@ const wbk = WBK({
 
 export async function handlePerson(
   id: EntityId,
-  options?: { fetchDate?: Date }
+  options?: { fetchDate?: Date },
 ): Promise<PersonInfo> {
   const personInfo: PersonInfo = {
     // aliases: [],
@@ -48,7 +48,7 @@ export async function handlePerson(
   });
 
   const { data } = await axios.get<{ entities: Entities; success: number }>(
-    entitiesUrl
+    entitiesUrl,
   );
 
   if (data.success && Object.keys(data.entities).length === 1) {

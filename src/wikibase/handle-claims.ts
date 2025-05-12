@@ -20,13 +20,13 @@ function claimName(property: string): string {
 
 export async function handlePropertyClaims(
   entity: Item,
-  personInfo: PersonInfo
+  personInfo: PersonInfo,
 ): Promise<void> {
   for (const propClaims of Object.values(entity.claims ?? {})) {
     for (const claim of propClaims) {
       const { mainsnak } = claim;
 
-      console.log("mainsnack", JSON.stringify(mainsnak))
+      console.log("mainsnack", JSON.stringify(mainsnak));
 
       if (!mainsnak.datavalue) {
         return;
@@ -40,7 +40,7 @@ export async function handlePropertyClaims(
             if (mainsnak.property === CONORID) {
               console.log(
                 mainsnak.datavalue.value,
-                mainsnak.datavalue.value === "7912035"
+                mainsnak.datavalue.value === "7912035",
               );
             }
           }
@@ -58,12 +58,12 @@ export async function handlePropertyClaims(
             // console.log(claimName(mainsnak.property));
             if (mainsnak.property === P.DATE_OF_BIRTH) {
               personInfo.birthYear = wikibaseTimeToDateObject(
-                mainsnak.datavalue.value.time
+                mainsnak.datavalue.value.time,
               ).getFullYear();
             }
             if (mainsnak.property === P.DATE_OF_DEATH) {
               personInfo.deathYear = wikibaseTimeToDateObject(
-                mainsnak.datavalue.value.time
+                mainsnak.datavalue.value.time,
               ).getFullYear();
             }
           }

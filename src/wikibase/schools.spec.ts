@@ -20,7 +20,9 @@ const wbk = WBK({
 });
 const mockedGetEntities = vi.mocked(wbk.getEntities);
 // const mockedSimplifyClaims = vi.mocked(wikibaseSDK.simplifyClaims);
-const mockedSimplifyPropertyClaims = vi.mocked(wikibaseSDK.simplifyPropertyClaims);
+const mockedSimplifyPropertyClaims = vi.mocked(
+  wikibaseSDK.simplifyPropertyClaims,
+);
 
 // Define the Wikidata entity ID for Albert Einstein (if used in actual implementation)
 const einsteinEntityId = "Q937";
@@ -32,7 +34,7 @@ const einsteinEntityId = "Q937";
  * @returns A Promise that resolves to an array of simplified school names, or an empty array if no schools are found.
  */
 const getSchoolsAttended = async (
-  entityId: wikibaseSDK.EntityId
+  entityId: wikibaseSDK.EntityId,
 ): Promise<string[]> => {
   try {
     const entityUrl = mockedGetEntities({
@@ -62,7 +64,7 @@ const getSchoolsAttended = async (
 
     if (!attendedSchoolClaims) {
       console.warn(
-        `No 'educated at' (P69) claims found for entity ${entityId}`
+        `No 'educated at' (P69) claims found for entity ${entityId}`,
       );
       return [];
     }
@@ -74,7 +76,7 @@ const getSchoolsAttended = async (
 
     const schoolEntityIds = Array.isArray(simplifiedClaims)
       ? simplifiedClaims.filter(
-          (claim): claim is string => typeof claim === "string"
+          (claim): claim is string => typeof claim === "string",
         )
       : [];
 
@@ -83,7 +85,7 @@ const getSchoolsAttended = async (
     }
 
     const schoolEntitiesUrl = mockedGetEntities({
-      ids: schoolEntityIds.map(c => c as wikibaseSDK.EntityId),
+      ids: schoolEntityIds.map((c) => c as wikibaseSDK.EntityId),
       props: ["labels"],
       format: "json",
     });
@@ -101,7 +103,7 @@ const getSchoolsAttended = async (
     return schoolNames;
   } catch (error) {
     console.error(
-      `Error fetching data from Wikidata: ${(error as Error).message}`
+      `Error fetching data from Wikidata: ${(error as Error).message}`,
     );
     throw error;
   }
@@ -196,7 +198,7 @@ test("getSchoolsAttended should return the names of the schools attended by the 
   global.Promise.resolve = vi
     .fn()
     .mockReturnValueOnce(
-      Promise.resolve({ entities: { Q0001: mockEntities.entities.Q0001 } })
+      Promise.resolve({ entities: { Q0001: mockEntities.entities.Q0001 } }),
     ) // First response
     .mockReturnValueOnce(
       Promise.resolve({
@@ -205,13 +207,15 @@ test("getSchoolsAttended should return the names of the schools attended by the 
           Q1001: mockEntities.entities.Q1001,
           Q1002: mockEntities.entities.Q1002,
         },
-      })
+      }),
     );
 
   const newLocalf = ["Q1001", "Q1002"];
-  const newLocal: wikibaseSDK.EntityId[] = newLocalf.map(f=> f as wikibaseSDK.EntityId);
+  const newLocal: wikibaseSDK.EntityId[] = newLocalf.map(
+    (f) => f as wikibaseSDK.EntityId,
+  );
   // Mock the simplifyClaims function
-  
+
   mockedSimplifyPropertyClaims.mockReturnValue(newLocal);
 
   try {
@@ -250,10 +254,10 @@ test('getSchoolsAttended should return an empty array if the entity has no "educ
           claims: {}, // No claims at all
         },
       },
-    })
+    }),
   );
 
-//   mockedSimplifyClaims.mockReturnValue([]);
+  //   mockedSimplifyClaims.mockReturnValue([]);
 
   try {
     const schools = await getSchoolsAttended("Q0002");
@@ -278,7 +282,7 @@ test("getSchoolsAttended should handle errors gracefully", async () => {
 
   try {
     await expect(getSchoolsAttended("Q0003")).rejects.toThrow(
-      "Failed to fetch"
+      "Failed to fetch",
     );
     expect(mockedGetEntities).toHaveBeenCalledTimes(1);
   } finally {

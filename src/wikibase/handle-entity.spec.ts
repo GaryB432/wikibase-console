@@ -106,13 +106,13 @@ test("gets person", async () => {
     name: "Fakey F. McFakerson Ⅴ",
     occupations: [],
     schools: ["ETH Zurich", "University of Zurich"],
-    sources: [],  // TODO assert wikidata
+    sources: [], // TODO assert wikidata
     wikipediaTitle: "Fakey F. McFakerson Ⅴ",
   });
 
   // Ensure axios.get was called with the correct URL
   expect(axios.get).toHaveBeenCalledWith(
-    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims"
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims",
   );
 });
 

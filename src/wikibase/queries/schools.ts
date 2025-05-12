@@ -17,7 +17,7 @@ const wbk = wikibaseSDK.WBK({
  * @returns A Promise that resolves to an array of simplified school names, or an empty array if no schools are found.
  */
 export async function getSchoolsAttended(
-  entityId: wikibaseSDK.EntityId
+  entityId: wikibaseSDK.EntityId,
 ): Promise<string[]> {
   try {
     const entityUrl = wbk.getEntities({
@@ -59,7 +59,7 @@ export async function getSchoolsAttended(
 
     if (!attendedSchoolClaims) {
       console.warn(
-        `No 'educated at' (P69) claims found for entity ${entityId}`
+        `No 'educated at' (P69) claims found for entity ${entityId}`,
       );
       return [];
     }
@@ -71,7 +71,7 @@ export async function getSchoolsAttended(
 
     const schoolEntityIds = Array.isArray(simplifiedClaims)
       ? simplifiedClaims.filter(
-          (claim): claim is string => typeof claim === "string"
+          (claim): claim is string => typeof claim === "string",
         )
       : [];
 
@@ -89,7 +89,7 @@ export async function getSchoolsAttended(
 
     const entitiesUrl = wbk.getEntities({
       ids: schoolEntityIds.map<wikibaseSDK.EntityId>(
-        (i) => i as wikibaseSDK.EntityId
+        (i) => i as wikibaseSDK.EntityId,
       ),
       languages: [language],
       props: ["labels"],
@@ -142,7 +142,7 @@ export async function getSchoolsAttended(
     return schoolNames;
   } catch (error) {
     console.error(
-      `Error fetching data from Wikidata: ${(error as Error).message}`
+      `Error fetching data from Wikidata: ${(error as Error).message}`,
     );
     throw error;
   }
