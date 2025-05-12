@@ -32,6 +32,46 @@ const baseMap = new Map<string, Entities>([
       },
     },
   ],
+  [
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&props=claims", // TODO add languages ?
+    {
+      Q9847: {
+        pageid: 350001,
+        ns: 0,
+        title: "Q9847",
+        lastrevid: 2332723365,
+        modified: "2055-03-31T04:09:06Z",
+        type: "item",
+        id: "Q9847",
+        claims,
+      },
+    },
+  ],
+  [
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q11942%7CQ206702&format=json&languages=en&props=labels",
+    {
+      Q11942: {
+        type: "item",
+        id: "Q11942",
+        labels: {
+          en: {
+            language: "en",
+            value: "ETH Zurich",
+          },
+        },
+      },
+      Q206702: {
+        type: "item",
+        id: "Q206702",
+        labels: {
+          en: {
+            language: "en",
+            value: "University of Zurich",
+          },
+        },
+      },
+    },
+  ],
 ]);
 
 vi.mock("axios");
@@ -43,7 +83,7 @@ test("gets person", async () => {
   mockGet.mockImplementation(async (url: string) => {
     const entities = baseMap.get(url);
     if (!entities) {
-      console.log(url);
+      console.error(url);
       throw new Error("mock axios 404", { cause: url });
     }
     const data: { entities: Entities; success: 1 } = {
@@ -61,17 +101,18 @@ test("gets person", async () => {
     birthYear: 1879,
     deathYear: 1955,
     fetchDate,
+    fieldOfWork: ["Anonymity", "Unit Testing"],
     id: "Q9847",
     name: "Fakey F. McFakerson Ⅴ",
     occupations: [],
-    schools: [],
-    sources: [],
+    schools: ["ETH Zurich", "University of Zurich"],
+    sources: [],  // TODO assert wikidata
     wikipediaTitle: "Fakey F. McFakerson Ⅴ",
   });
 
   // Ensure axios.get was called with the correct URL
   expect(axios.get).toHaveBeenCalledWith(
-    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims",
+    "https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q9847&format=json&languages=en&props=labels%7Cdescriptions%7Caliases%7Cclaims"
   );
 });
 
