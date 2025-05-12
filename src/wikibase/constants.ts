@@ -40,3 +40,7 @@ export const WIKIDATA_PERSON_PROPERTIES = {
   MEMBER_OF: "P463", // Member of
   EMAIL_ADDRESS: "P968", // Email address
 };
+
+export const WIKIDATA_OTHER_PROPERTIES = {
+ START_TIME: "P580", // time an entity begins to exist or a statement starts being valid
+}
