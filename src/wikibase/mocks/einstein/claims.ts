@@ -1,11 +1,99 @@
-import { type Claims } from "wikibase-sdk";
+import type { Claims, Reference } from "wikibase-sdk";
+
+const references: Reference[] = [
+  {
+    hash: "6232039e6623c9001eaf5e2b1ed8dabbcdc3eb25",
+    snaks: {
+      P854: [
+        {
+          snaktype: "value",
+          property: "P854",
+          hash: "d166320e8592653555e6312f9dfb6e66dc35d93e",
+          datavalue: {
+            value: "https://www.ige.ch/de/ueber-uns/einstein.html",
+            type: "string",
+          },
+          datatype: "url",
+        },
+      ],
+    },
+    "snaks-order": ["P854"],
+  },
+  {
+    hash: "21418a30185063737a486029d7faa257069992b3",
+    snaks: {
+      P854: [
+        {
+          snaktype: "value",
+          property: "P854",
+          hash: "7d17ca097970891fd081a2c0eadf5726fd23fbba",
+          datavalue: {
+            value:
+              "https://www.library.ethz.ch/en/Resources/Digital-library/Einstein-Online/Einstein-s-Studies-at-the-Polytechnic-Institute-in-Zurich-1896-1900",
+            type: "string",
+          },
+          datatype: "url",
+        },
+      ],
+    },
+    "snaks-order": ["P854"],
+  },
+];
+const schoolClaims: Claims = {
+  P69: [
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P69",
+        hash: "701a78550a66a751489486b60c9527ee768bcd9b",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            "numeric-id": 11942,
+            id: "Q11942",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+      // qualifiers,
+      // "qualifiers-order": ["P512", "P580", "P582", "P812"],
+      id: "q937$9297F2A2-FAD7-466F-8B30-79AA41E8793F",
+      rank: "normal",
+      references,
+    },
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P69",
+        hash: "b8a57344f9bbe4ea338c511e0167d28084b5fd95",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            "numeric-id": 206702,
+            id: "Q206702",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+
+      "qualifiers-order": ["P812", "P582", "P512", "P184", "P1026"],
+      id: "Q937$E90CA760-E20F-4EED-BDB8-F72DCF4B484C",
+      rank: "normal",
+    },
+  ],
+};
 
 export const claims: Claims = {
+  ...schoolClaims,
   P569: [
     {
       mainsnak: {
         snaktype: "value",
-        property: "P569", // DATE_OF_BIRTH
+        property: "P569",
         hash: "e80d845c8bf6c2e47bdc5f85c11ab21d0f2c9a75",
         datavalue: {
           value: {
@@ -83,59 +171,6 @@ export const claims: Claims = {
           },
           "snaks-order": ["P854"],
         },
-        {
-          hash: "81879642224ecc141500846bdf64e0cc71170210",
-          snaks: {
-            P248: [
-              {
-                snaktype: "value",
-                property: "P248",
-                hash: "def9f19d84b65167a2a17ce38364d264c16127fc",
-                datavalue: {
-                  value: {
-                    "entity-type": "item",
-                    "numeric-id": 19938912,
-                    id: "Q19938912",
-                  },
-                  type: "wikibase-entityid",
-                },
-                datatype: "wikibase-item",
-              },
-            ],
-            P268: [
-              {
-                snaktype: "value",
-                property: "P268",
-                hash: "7502b674b3ce130a850c3ff68487516dcbadd7f2",
-                datavalue: {
-                  value: "119016075",
-                  type: "string",
-                },
-                datatype: "external-id",
-              },
-            ],
-            P813: [
-              {
-                snaktype: "value",
-                property: "P813",
-                hash: "d6162a1716489623c6e595e448b17f8dca4fb2e8",
-                datavalue: {
-                  value: {
-                    time: "+2015-10-10T00:00:00Z",
-                    timezone: 0,
-                    before: 0,
-                    after: 0,
-                    precision: 11,
-                    calendarmodel: "http://www.wikidata.org/entity/Q1985727",
-                  },
-                  type: "time",
-                },
-                datatype: "time",
-              },
-            ],
-          },
-          "snaks-order": ["P248", "P268", "P813"],
-        },
       ],
     },
   ],
@@ -143,7 +178,7 @@ export const claims: Claims = {
     {
       mainsnak: {
         snaktype: "value",
-        property: "P570",
+        property: "P570", // DATE_OF_DEATH
         hash: "9c234eae7ea4449f273c9b68e44aaee221e0d0f8",
         datavalue: {
           value: {
@@ -276,6 +311,51 @@ export const claims: Claims = {
       "qualifiers-order": ["P1810"],
       id: "Q937$2271da52-4ee1-6a74-8d99-294bc3f6c7de",
       rank: "normal",
+    },
+  ],
+  P101: [
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P101", // FIELD_OF_WORK
+        hash: "996fbf8c041a60ba898362a7b3b64b5219957d99",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            "numeric-id": 18362,
+            id: "Q18362",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+      id: "Q937$7267cb07-4fed-ba1d-d28f-bb82e7faf4ad",
+      rank: "normal",
+      references: [
+        {
+          hash: "288ab581e7d2d02995a26dfa8b091d96e78457fc",
+          snaks: {
+            P143: [
+              {
+                snaktype: "value",
+                property: "P143",
+                hash: "6a164248fc96bfa583bbb495cb63ae6401ec203c",
+                datavalue: {
+                  value: {
+                    "entity-type": "item",
+                    "numeric-id": 206855,
+                    id: "Q206855",
+                  },
+                  type: "wikibase-entityid",
+                },
+                datatype: "wikibase-item",
+              },
+            ],
+          },
+          "snaks-order": ["P143"],
+        },
+      ],
     },
   ],
 };
