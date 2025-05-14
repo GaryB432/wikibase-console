@@ -5,20 +5,22 @@ import type {
   EntityId,
   InstanceConfig,
   ItemId,
+  SearchResult,
   Wbk,
 } from "wikibase-sdk";
 import WBK from "wikibase-sdk";
 
+export type TermRecord = Record<EntityId, string>;
+
+const language = "en";
+
 export class DataService {
+  private config: InstanceConfig;
   private readonly wbk: Wbk;
-  public constructor(config: InstanceConfig, private counter: number) {
+  public constructor(config: InstanceConfig) {
+    this.config = config;
     this.wbk = WBK(config);
   }
-  public add(a: number): number {
-    this.counter += a;
-    return this.counter;
-  }
-  // public async getEntities() {}
 
   public async fetchDetailedEntity(id: EntityId): Promise<Entity | undefined> {
     const entityUrl = this.wbk.getEntities({
@@ -35,7 +37,7 @@ export class DataService {
   }
 
   public async fetchEntitiesWithClaims(
-    entityId: ItemId
+    entityId: ItemId,
   ): Promise<Entity | undefined> {
     const entityUrl = this.wbk.getEntities({
       ids: [entityId],
@@ -48,10 +50,38 @@ export class DataService {
     }>(entityUrl);
 
     return entityData.entities[entityId];
+  }
+
+  public async fetchLabels(
+    entityLabelRecord: TermRecord,
+    language = "en",
+  ): Promise<TermRecord> {
+    const entitiesUrl = this.wbk.getEntities({
+      ids: Object.keys(entityLabelRecord) as EntityId[],
+      languages: [language],
+      props: ["labels"],
+    });
+
+    const { data } = await axios.get<{
+      entities: Entities;
+      success: number;
+    }>(entitiesUrl);
+
+    return Object.values(data.entities)
+      .filter((e) => e.type === "item")
+      .reduce((termAccumulator, item) => {
+        let text = `missing term for ${item.title ?? item.id}`;
+
+        if (item.labels) {
+          text = item.labels[language]?.value ?? "wtf";
+        }
+        termAccumulator[item.id] = text;
+        return termAccumulator;
+      }, {} as TermRecord);
   }
 
   public async fetchSimpleEntity(
-    entityId: ItemId
+    entityId: ItemId,
   ): Promise<Entity | undefined> {
     const entityUrl = this.wbk.getEntities({
       ids: [entityId],
@@ -65,8 +95,34 @@ export class DataService {
 
     return entityData.entities[entityId];
   }
-  public greet(name: string): string {
-    return `DataService says: hello to ${name}`;
+
+  public async searchForHumans(search: string): Promise<SearchResult[]> {
+    const { data } = await axios.get<{
+      search: SearchResult[];
+      success: number;
+    }>(this.getSearchUrl(search).href);
+
+    const resultsWithHumanityFlag = await Promise.all(
+      data.search.map(async (result) => ({
+        ...result,
+        isHuman: await isInstanceOfHuman(result.id),
+      })),
+    );
+
+    return resultsWithHumanityFlag.filter((result) => result.isHuman);
+  }
+
+  private getSearchUrl(search: string): URL {
+    const u = new URL("w/api.php", this.config.instance);
+    u.searchParams.set("action", "wbsearchentities");
+    u.searchParams.set("search", search);
+    u.searchParams.set("language", language);
+    u.searchParams.set("limit", "5");
+    u.searchParams.set("continue", "0");
+    u.searchParams.set("format", "json");
+    u.searchParams.set("uselang", language);
+    u.searchParams.set("type", "item");
+    return u;
   }
 }
 
@@ -75,4 +131,42 @@ const defaultConfig = {
   sparqlEndpoint: "https://query.wikidata.org/sparql",
 };
 
-export const wikibaseService = new DataService(defaultConfig, 2);
+async function isInstanceOfHuman(entityQID: string) {
+  try {
+    const response = await axios.get(`https://www.wikidata.org/w/api.php`, {
+      params: {
+        action: "wbgetentities",
+        ids: entityQID,
+        limit: 6,
+        format: "json",
+        props: "claims",
+      },
+    });
+
+    const data = response.data;
+
+    // console.log(data.entities[entityQID].claims)
+
+    if (
+      data.entities &&
+      data.entities[entityQID] &&
+      data.entities[entityQID].claims
+    ) {
+      const claims = data.entities[entityQID].claims;
+      if (claims.P31) {
+        // P31 is the property ID for "instance of"
+        return claims.P31.some(
+          (claim: { mainsnak: { datavalue: { value: { id: string } } } }) =>
+            claim.mainsnak.datavalue.value.id === "Q5",
+        );
+      }
+    }
+
+    return false; // Entity not found or no instance of claim
+  } catch (error) {
+    console.error("Error fetching Wikidata entity:", error);
+    return false;
+  }
+}
+
+export const wikibaseService = new DataService(defaultConfig);

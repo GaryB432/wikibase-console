@@ -1,4 +1,5 @@
 import { type EntityId } from "wikibase-sdk";
+import { wikibaseService } from "wikibase/data-service.js";
 import { handlePerson } from "./wikibase/handle-entity.js";
 
 const EINSTEIN_Q: EntityId = "Q937";
@@ -13,11 +14,28 @@ const EINSTEIN_Q: EntityId = "Q937";
 //   P.NOTABLE_WORK,
 // ];
 
-handlePerson(EINSTEIN_Q).then(
-  (p) => {
-    console.log(JSON.stringify(p, undefined, 4));
+const search = "albert einstein";
+
+wikibaseService.searchForHumans(search).then(
+  (q) => {
+    const questions = q.map((e) => {
+      const { id, label } = e;
+      return { id, label };
+    });
+    if (questions.length === 1) {
+      // questions.forEach((q) => console.log(q.label, q.id));
+      // console.log(JSON.stringify(questions, undefined, 2));
+      handlePerson(EINSTEIN_Q).then(
+        (p) => {
+          console.log(JSON.stringify(p, undefined, 4));
+        },
+        (e) => {
+          console.log("nope", e);
+        },
+      );
+    } else {
+      console.error(`${questions.length} ambuguity unhandled for now`);
+    }
   },
-  (e) => {
-    console.log("nope", e);
-  },
+  () => {},
 );
