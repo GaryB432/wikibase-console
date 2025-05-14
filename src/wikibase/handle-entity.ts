@@ -8,7 +8,7 @@ const language = "en";
 
 export async function handlePerson(
   id: EntityId,
-  options?: { fetchDate?: Date }
+  options?: { fetchDate?: Date },
 ): Promise<PersonInfo> {
   const personInfo: PersonInfo = {
     // aliases: [],

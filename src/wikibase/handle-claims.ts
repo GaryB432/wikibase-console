@@ -6,7 +6,7 @@ import {
 import { WIKIDATA_PERSON_PROPERTIES as P } from "./constants.js";
 import { type PersonInfo } from "./types.js";
 
-const CONORID: EntityId = "P1280"; // identifier in the National and University Library, Ljubljana database
+// const CONORID: EntityId = "P1280"; // identifier in the National and University Library, Ljubljana database
 
 export async function handlePropertyClaims(
   entity: Item,
@@ -16,7 +16,7 @@ export async function handlePropertyClaims(
     for (const claim of propClaims) {
       const { mainsnak } = claim;
 
-      console.log("mainsnack", JSON.stringify(mainsnak));
+      // console.log("mainsnack", JSON.stringify(mainsnak));
 
       if (!mainsnak.datavalue) {
         return;
@@ -27,12 +27,12 @@ export async function handlePropertyClaims(
       switch (mainsnak.datatype) {
         case "external-id": {
           if (mainsnak.datavalue.type === "string") {
-            if (mainsnak.property === CONORID) {
-              console.log(
-                mainsnak.datavalue.value,
-                mainsnak.datavalue.value === "7912035",
-              );
-            }
+            // if (mainsnak.property === CONORID) {
+            //   console.log(
+            //     mainsnak.datavalue.value,
+            //     mainsnak.datavalue.value === "7912035",
+            //   );
+            // }
           }
           break;
         }
