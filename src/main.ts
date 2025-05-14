@@ -14,7 +14,7 @@ const EINSTEIN_Q: EntityId = "Q937";
 //   P.NOTABLE_WORK,
 // ];
 
-const search = "albert einstein";
+const search = "churchill";
 
 wikibaseService.searchForHumans(search).then(
   (q) => {
@@ -23,9 +23,11 @@ wikibaseService.searchForHumans(search).then(
       return { id, label };
     });
     if (questions.length === 1) {
-      // questions.forEach((q) => console.log(q.label, q.id));
       // console.log(JSON.stringify(questions, undefined, 2));
-      handlePerson(EINSTEIN_Q).then(
+
+      let subject = questions[0]!.id as EntityId;
+
+      handlePerson(subject).then(
         (p) => {
           console.log(JSON.stringify(p, undefined, 4));
         },
@@ -34,6 +36,7 @@ wikibaseService.searchForHumans(search).then(
         },
       );
     } else {
+      questions.forEach((q) => console.log(q.label, q.id));
       console.error(`${questions.length} ambuguity unhandled for now`);
     }
   },
