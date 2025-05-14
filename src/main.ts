@@ -2,7 +2,6 @@ import { type EntityId } from "wikibase-sdk";
 import { wikibaseService } from "wikibase/data-service.js";
 import { handlePerson } from "./wikibase/handle-entity.js";
 
-const EINSTEIN_Q: EntityId = "Q937";
 // const others: string[] = [
 //   P.DATE_OF_BIRTH,
 //   P.DATE_OF_DEATH,
@@ -14,7 +13,7 @@ const EINSTEIN_Q: EntityId = "Q937";
 //   P.NOTABLE_WORK,
 // ];
 
-const search = "churchill";
+const search = "einstein";
 
 wikibaseService.searchForHumans(search).then(
   (q) => {
@@ -23,11 +22,7 @@ wikibaseService.searchForHumans(search).then(
       return { id, label };
     });
     if (questions.length === 1) {
-      // console.log(JSON.stringify(questions, undefined, 2));
-
-      let subject = questions[0]!.id as EntityId;
-
-      handlePerson(subject).then(
+      handlePerson((questions[0]!.id as EntityId)).then(
         (p) => {
           console.log(JSON.stringify(p, undefined, 4));
         },
@@ -36,6 +31,7 @@ wikibaseService.searchForHumans(search).then(
         },
       );
     } else {
+      // TODO handle 
       questions.forEach((q) => console.log(q.label, q.id));
       console.error(`${questions.length} ambuguity unhandled for now`);
     }
