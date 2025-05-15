@@ -1,4 +1,4 @@
-import prompts from "prompts";
+import prompts, { PromptType } from "prompts";
 import { type EntityId } from "wikibase-sdk";
 import { wikibaseService } from "wikibase/data-service.js";
 import { handlePerson } from "./wikibase/handle-entity.js";
@@ -28,6 +28,31 @@ import { argv } from "node:process";
 // };
 
 async function getEntityId(name: string): Promise<EntityId | null> {
+  const questions = [
+    {
+      type: "text" as PromptType,
+      name,
+      message: "Search for name",
+    },
+    {
+      type: (prev: string): PromptType | null => {
+        return prev === "" ? null : "select";
+      },
+      name: "id",
+      message: "Choose one",
+      choices: []
+    },
+    // {
+    //   type: (prev: string) => (prev == "pizza" ? "text" : null) as PromptType,
+    //   name: "id",
+    //   message: "Pick one",
+    //   choices: [],
+    // },
+  ];
+
+  const response = await prompts(questions);
+  console.log(response);
+
   // const h = await wikibaseService.searchForHumans(name);
 
   // const j = h.map((k) => {
