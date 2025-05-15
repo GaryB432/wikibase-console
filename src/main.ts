@@ -1,6 +1,8 @@
+import prompts from "prompts";
 import { type EntityId } from "wikibase-sdk";
 import { wikibaseService } from "wikibase/data-service.js";
 import { handlePerson } from "./wikibase/handle-entity.js";
+import { argv } from "node:process";
 
 // const others: string[] = [
 //   P.DATE_OF_BIRTH,
@@ -13,9 +15,53 @@ import { handlePerson } from "./wikibase/handle-entity.js";
 //   P.NOTABLE_WORK,
 // ];
 
-import prompts from "prompts";
+// const ps = process.argv;
+// const p1 = process.argv0;
+// console.log(JSON.stringify({ ps, p1 }));
+// const dd = {
+//   ps: [
+//     "/home/gary/.nvm/versions/node/v22.13.0/bin/node",
+//     "/home/gary/repos/wikibase-console/src/main.ts",
+//     "marx",
+//   ],
+//   p1: "/home/gary/.nvm/versions/node/v22.13.0/bin/node",
+// };
 
-const search = "ludwig beethoven";
+async function getEntityId(name: string): Promise<EntityId | null> {
+  // const h = await wikibaseService.searchForHumans(name);
+
+  // const j = h.map((k) => {
+  //   return {
+  //     title: k.title,
+  //     label: k.label,
+  //     id: k.id,
+  //     description: k.description,
+  //   };
+  // });
+
+  // if (j.length === 1) {
+  //   return j[0]!.id as EntityId;
+  // }
+
+  // prompts({
+  //   type: "select",
+  //   name: "id",
+  //   message: "Who's your guy",
+  //   choices: j.map((f) => ({
+  //     title: f.description ?? f.title,
+  //     value: f.id,
+  //   })),
+  // });
+
+  // console.log(j);
+  throw new Error("Function not implemented.");
+}
+
+// if (!search) {
+//   questions.push({
+//     type: "string",
+//   });
+// }
 
 // wikibaseService.searchForHumans(search).then(
 //   (found) => {
@@ -69,25 +115,28 @@ const search = "ludwig beethoven";
 // );
 
 async function main(): Promise<void> {
-  let subjectId: EntityId | null = null;
-  const results = await wikibaseService.searchForHumans(search);
-
-  if (results.length > 0) {
-    if (results.length === 1) {
-      subjectId = results[0]!.id as EntityId;
-    } else {
-      const promptedPerson = await prompts({
-        type: "select",
-        name: "id",
-        message: "Select the appropriate person from Wikidata",
-        choices: results.map((res) => ({
-          title: res.description ?? res.label,
-          value: res.id,
-        })),
-      });
-      subjectId = promptedPerson.id;
-    }
+  let subjectId: EntityId | null = await getEntityId(argv[2]!);
+  if (!argv[2]) {
+    throw new Error("needs 3 arguments");
   }
+  const results = await wikibaseService.searchForHumans(argv[2]);
+
+  // if (results.length > 0) {
+  //   if (results.length === 1) {
+  //     subjectId = results[0]!.id as EntityId;
+  //   } else {
+  //     const promptedPerson = await prompts({
+  //       type: "select",
+  //       name: "id",
+  //       message: "Select the appropriate person from Wikidata",
+  //       choices: results.map((res) => ({
+  //         title: res.description ?? res.label,
+  //         value: res.id,
+  //       })),
+  //     });
+  //     subjectId = promptedPerson.id;
+  //   }
+  // }
 
   if (subjectId) {
     const p = await handlePerson(subjectId);
@@ -96,6 +145,10 @@ async function main(): Promise<void> {
 }
 
 main().then(
-  () => {},
-  () => {},
+  () => {
+    console.log("done");
+  },
+  (e) => {
+    console.error(e);
+  }
 );
