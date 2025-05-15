@@ -109,6 +109,11 @@ export class DataService {
       })),
     );
 
+    // if (resultsWithHumanityFlag.some(result=>!result.isHuman))
+    // {
+    //   console.log(resultsWithHumanityFlag)
+    // }
+
     return resultsWithHumanityFlag.filter((result) => result.isHuman);
   }
 
@@ -143,16 +148,10 @@ async function isInstanceOfHuman(entityQID: string) {
       },
     });
 
-    const data = response.data;
+    const entities = response.data.entities;
 
-    // console.log(data.entities[entityQID].claims)
-
-    if (
-      data.entities &&
-      data.entities[entityQID] &&
-      data.entities[entityQID].claims
-    ) {
-      const claims = data.entities[entityQID].claims;
+    if (entities && entities[entityQID] && entities[entityQID].claims) {
+      const claims = entities[entityQID].claims;
       if (claims.P31) {
         // P31 is the property ID for "instance of"
         return claims.P31.some(
