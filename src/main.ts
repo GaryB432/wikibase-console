@@ -1,3 +1,5 @@
+import { argv } from "node:process";
+import prompts, { type Choice } from "prompts";
 import { type EntityId } from "wikibase-sdk";
 import { wikibaseService } from "wikibase/data-service.js";
 import { handlePerson } from "./wikibase/handle-entity.js";
@@ -13,81 +15,38 @@ import { handlePerson } from "./wikibase/handle-entity.js";
 //   P.NOTABLE_WORK,
 // ];
 
-import prompts from "prompts";
+async function promptChoiceFrom(name: string): Promise<Choice[]> {
+  const results = await wikibaseService.searchForHumans(name);
+  return results.map<Choice>((h) => {
+    return { title: h.description ?? h.label, value: h.id };
+  });
+}
 
-const search = "ludwig beethoven";
+async function getEntityId(name: string): Promise<EntityId | null> {
+  const choices = await promptChoiceFrom(name);
 
-// wikibaseService.searchForHumans(search).then(
-//   (found) => {
-//     let id: EntityId | null = null;
-//     // const qs = found.map((e) => {
-//     //   const { id, label, description } = e;
-//     //   return { id, label, description };
-//     // });
+  if (choices.length === 1) {
+    return choices[0]!.value;
+  }
 
-//     // const questions = qs.map(q=> ({...q, type:'select', message: 'Pick a Human', choices: []}));
+  const { id } = await prompts({
+    type: (term: string) => {
+      return term === "" ? null : "select";
+    },
+    name: "id",
+    message: "Choose one",
+    choices,
+  });
 
-//     if (found.length > 0) {
-//       if (found.length === 1) {
-//         id = found[0]!.id as EntityId;
-//       } else {
-//         prompts({
-//           type: "select",
-//           name: "id",
-//           message: "Who's your guy",
-//           choices: found.map((f) => ({
-//             title: f.description ?? "hmm",
-//             value: f.id,
-//           })),
-//         }).then(
-//           (r) => {
-//             console.log(r.id, "is your guy");
-//             id = r.id;
-//           },
-//           (e) => {
-//             console.error("bad things", e);
-//           }
-//         );
-//         if (id) {
-//           handlePerson(id).then(
-//             (p) => {
-//               console.log(JSON.stringify(p, undefined, 4));
-//             },
-//             (e) => {
-//               console.log("nope", e);
-//             }
-//           );
-//         }
-//       }
-
-//       // // TODO handle
-//       // // questionsForFake.forEach((q) => console.log(q.label, q.description, q.id));
-//       // console.error(`${questionsForFake.length} ambiguity unhandled for now`);
-//     }
-//   },
-//   () => {}
-// );
+  return id;
+}
 
 async function main(): Promise<void> {
-  let subjectId: EntityId | null = null;
-  const results = await wikibaseService.searchForHumans(search);
-
-  if (results.length > 0) {
-    if (results.length === 1) {
-      subjectId = results[0]!.id as EntityId;
-    } else {
-      const promptedPerson = await prompts({
-        type: "select",
-        name: "id",
-        message: "Select the appropriate person from Wikidata",
-        choices: results.map((res) => ({
-          title: res.description ?? res.label,
-          value: res.id,
-        })),
-      });
-      subjectId = promptedPerson.id;
-    }
+  if (!argv[2]) {
+    throw new Error("missing argument");
   }
+
+  const subjectId: EntityId | null = await getEntityId(argv[2]);
 
   if (subjectId) {
     const p = await handlePerson(subjectId);
@@ -96,6 +55,10 @@ async function main(): Promise<void> {
 }
 
 main().then(
-  () => {},
-  () => {},
+  () => {
+    console.log("done");
+  },
+  (e) => {
+    console.error(e);
+  }
 );
