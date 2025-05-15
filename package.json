@@ -2,6 +2,7 @@
   "name": "wikibase-console",
   "type": "module",
   "version": "1.0.0",
+  "private": true,
   "description": "command line app to explore wikibase",
   "main": "index.js",
   "scripts": {
