@@ -1,6 +1,7 @@
 import type { EntityId, Item } from "wikibase-sdk";
 import { wikibaseService } from "./data-service.js";
 import { handlePropertyClaims } from "./handle-claims.js";
+import { getFieldsOfWork } from "./queries/fields.js";
 import { getSchoolsAttended } from "./queries/schools.js";
 import { type PersonInfo } from "./types.js";
 
@@ -48,6 +49,7 @@ export async function handlePerson(
 
     await handlePropertyClaims(subject, personInfo);
     personInfo.schools = await getSchoolsAttended(subject);
+    personInfo.fieldOfWork = await getFieldsOfWork(subject);
   }
 
   return personInfo;
