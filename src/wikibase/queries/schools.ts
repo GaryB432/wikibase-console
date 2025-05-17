@@ -3,7 +3,7 @@ import type {
   Item,
   WikibaseEntityIdSnakDataValue,
 } from "wikibase-sdk";
-import { type TermRecord, wikibaseService } from "wikibase/data-service.js";
+import { type TermRecord, wikibaseService } from "../data-service.js";
 
 /**
  * Retrieves the schools attended by a given Wikidata entity.
@@ -24,7 +24,7 @@ export async function getSchoolsAttended(entity: Item): Promise<string[]> {
 
     if (!attendedSchoolClaims) {
       console.warn(
-        `No 'educated at' (P69) claims found for entity ${entity.id}`,
+        `No 'educated at' (P69) claims found for entity ${entity.id}`
       );
       return [];
     }
@@ -32,9 +32,9 @@ export async function getSchoolsAttended(entity: Item): Promise<string[]> {
     const termRecord = makeTermRecordFrom(
       attendedSchoolClaims
         .map(
-          (claim) => claim.mainsnak.datavalue as WikibaseEntityIdSnakDataValue,
+          (claim) => claim.mainsnak.datavalue as WikibaseEntityIdSnakDataValue
         )
-        .map((v) => v.value.id),
+        .map((v) => v.value.id)
     );
 
     const attendedSchoolNameMap = await wikibaseService.fetchLabels(termRecord);
@@ -44,7 +44,7 @@ export async function getSchoolsAttended(entity: Item): Promise<string[]> {
     return schoolNames;
   } catch (error) {
     console.error(
-      `Error fetching data from Wikidata: ${(error as Error).message}`,
+      `Error fetching data from Wikidata: ${(error as Error).message}`
     );
     throw error;
   }
