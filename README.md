@@ -4,11 +4,41 @@
 ![GitHub branch check runs](https://img.shields.io/github/check-runs/GaryB432/wikibase-console/master)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-ESM command line app for exploring the [Wikibase API](https://www.mediawiki.org/wiki/Wikibase/API).
+Command line app for exploring the [Wikibase API](https://www.mediawiki.org/wiki/Wikibase/API).
 
 Most of my repos are private but this one is in front of my [loyal followers](https://github.com/GaryB432?tab=followers) (you know who you are 😎).
 
-## References
+# Goals
+
+Be a repo that
+
+- keeps me young and enthused
+- uses modules (ESM)
+- can be used to reproduce any dependency issues
+- takes baby-steps with LLM and co-pilot (commit messages for now and just a bit of code generation which is documented)
+- serves as dogfood and a laboratory for my other projects
+
+  - [eslint-plugin-gb - npm](https://www.npmjs.com/package/eslint-plugin-gb)
+  - [gb-schematics - npm](https://www.npmjs.com/package/gb-schematics)
+  - [humanaccomplishment.com](https://www.humanaccomplishment.com)
+
+- is a [playground](https://garyb432.github.io/wikibase-console/) for [GitHub Pages](https://pages.github.com/) (`gh-pages` branch) and [Jekyll](https://jekyllrb.com/) should I ever get to that.
+
+# Non-Goals
+
+- Duplicate functionality of official Wikibase tools
+- Be a real tool that people will actually use
+
+# Common development commands
+
+- pnpm dlx prettier . -w
+- pnpm exec eslint
+- pnpm run build
+- pnpm run lint
+- pnpm run test
+- tsx src/main.ts
+
+# References
 
 [maxlath/wikibase-sdk](https://github.com/maxlath/wikibase-sdk): JS utils functions to query a Wikibase instance and simplify its results
 
@@ -18,51 +48,79 @@ Most of my repos are private but this one is in front of my [loyal followers](ht
 
 [wikidata.org/w/api.php?action=wbgetentities&ids=Q125121451&format=json&languages=en&props=info%7Clabels](https://www.wikidata.org/w/api.php?action=wbgetentities&ids=Q125121451&format=json&languages=en&props=info%7Clabels)
 
-## Common Properties
+# Wikidata and the Semantic Web
 
-<!-- prettier-ignore -->
-| Property | Peopwery | Note | 
-| --- | --- | --- | 
-| P166 | [AWARD_RECEIVED](https://www.wikidata.org/wiki/Property:P166) | Award received | 
-| P1343 | [BIBLIOGRAPHY](https://www.wikidata.org/wiki/Property:P1343) | Bibliography | 
-| P509 | [CAUSE_OF_DEATH](https://www.wikidata.org/wiki/Property:P509) | Cause of death | 
-| P40 | [CHILD](https://www.wikidata.org/wiki/Property:P40) | Child | 
-| P27 | [COUNTRY_OF_CITIZENSHIP](https://www.wikidata.org/wiki/Property:P27) | Country of citizenship | 
-| P569 | [DATE_OF_BIRTH](https://www.wikidata.org/wiki/Property:P569) | Date of birth | 
-| P570 | [DATE_OF_DEATH](https://www.wikidata.org/wiki/Property:P570) | Date of death | 
-| P184 | [DOCTORAL_ADVISOR](https://www.wikidata.org/wiki/Property:P184) | Doctoral advisor | 
-| P185 | [DOCTORAL_STUDENT](https://www.wikidata.org/wiki/Property:P185) | Doctoral student | 
-| P69 | [EDUCATED_AT](https://www.wikidata.org/wiki/Property:P69) | Educated at | 
-| P968 | [EMAIL_ADDRESS](https://www.wikidata.org/wiki/Property:P968) | Email address | 
-| P108 | [EMPLOYER](https://www.wikidata.org/wiki/Property:P108) | Employer | 
-| P2013 | [FACEBOOK_ID](https://www.wikidata.org/wiki/Property:P2013) | Facebook ID | 
-| P734 | [FAMILY_NAME](https://www.wikidata.org/wiki/Property:P734) | Family name | 
-| P22 | [FATHER](https://www.wikidata.org/wiki/Property:P22) | Father | 
-| P101 | [FIELD_OF_WORK](https://www.wikidata.org/wiki/Property:P101) | Field of work | 
-| P21 | [GENDER](https://www.wikidata.org/wiki/Property:P21) | Sex or gender | 
-| P2037 | [GITHUB_USERNAME](https://www.wikidata.org/wiki/Property:P2037) | GitHub username | 
-| P735 | [GIVEN_NAME](https://www.wikidata.org/wiki/Property:P735) | Given name | 
-| P2048 | [HEIGHT](https://www.wikidata.org/wiki/Property:P2048) | Height | 
-| P18 | [IMAGE](https://www.wikidata.org/wiki/Property:P18) | Image | 
-| P31 | [INSTANCE_OF](https://www.wikidata.org/wiki/Property:P31) | Instance of (should be human Q5 for people) | 
-| P1412 | [LANGUAGE_SPOKEN](https://www.wikidata.org/wiki/Property:P1412) | Languages spoken, written or signed | 
-| P6634 | [LINKEDIN_ID](https://www.wikidata.org/wiki/Property:P6634) | LinkedIn ID | 
-| P463 | [MEMBER_OF](https://www.wikidata.org/wiki/Property:P463) | Member of | 
-| P25 | [MOTHER](https://www.wikidata.org/wiki/Property:P25) | Mother | 
-| P103 | [NATIVE_LANGUAGE](https://www.wikidata.org/wiki/Property:P103) | Native language | 
-| P800 | [NOTABLE_WORK](https://www.wikidata.org/wiki/Property:P800) | Notable work | 
-| P106 | [OCCUPATION](https://www.wikidata.org/wiki/Property:P106) | Occupation | 
-| P856 | [OFFICIAL_WEBSITE](https://www.wikidata.org/wiki/Property:P856) | Official website | 
-| P496 | [ORCID_ID](https://www.wikidata.org/wiki/Property:P496) | ORCID ID (for academics) | 
-| P19 | [PLACE_OF_BIRTH](https://www.wikidata.org/wiki/Property:P19) | Place of birth | 
-| P20 | [PLACE_OF_DEATH](https://www.wikidata.org/wiki/Property:P20) | Place of death | 
-| P102 | [POLITICAL_PARTY](https://www.wikidata.org/wiki/Property:P102) | Political party | 
-| P39 | [POSITION_HELD](https://www.wikidata.org/wiki/Property:P39) | Position held | 
-| P140 | [RELIGION](https://www.wikidata.org/wiki/Property:P140) | Religion | 
-| P551 | [RESIDENCE](https://www.wikidata.org/wiki/Property:P551) | Residence | 
-| P26 | [SPOUSE](https://www.wikidata.org/wiki/Property:P26) | Spouse | 
-| P2002 | [TWITTER_USERNAME](https://www.wikidata.org/wiki/Property:P2002) | Twitter username |
+```mermaid
+graph TD
+  subgraph ClaimStructure
+    Claim -- has one --> MainSnak
+    Claim -- can have many --> Qualifier
+    Claim -- can have many --> Reference
+    Claim[Claim]
+    MainSnak["Snak (Main)"]
+    Qualifier[Qualifier]
+    Reference[Reference]
+  end
 
-## LLM commit messages
+  subgraph SnakDetails
+    MainSnak -- has one --> Property
+    MainSnak -- has one --> DataValue
+    Property[Property]
+  end
 
-Almost all the code is my own but I am not authoring any of the commit messages myself.
+  subgraph ValueTypes
+    DataValue[DataValue]
+    DataValue -- is a --> String
+    DataValue -- is a --> WikipediaId
+    String[String]
+    WikipediaId[WikipediaId]
+  end
+
+```
+
+> Albert Einstein was born at Ulm
+
+```mermaid
+graph TD
+  subgraph ClaimStructure
+    Claim["Claim"]
+    Claim -- has one --> MainSnak
+    Claim -- can have many --> Qualifier
+    Claim -- can have many --> Reference
+  end
+
+  subgraph SnakDetails
+    MainSnak["Snak (Main)"]
+    MainSnak -- has one --> Property
+    MainSnak -- has one --> DataValue
+    Property["Property"]
+  end
+
+  subgraph ValueTypes
+    DataValue["DataValue"]
+    DataValue -- is a --> EntityId
+  end
+
+  subgraph ExampleClaim
+    Claim -- refers to --> EinsteinEntity
+    Claim -- describes property --> BornAtProperty
+    MainSnak -- has value --> UlmEntity
+    EinsteinEntity["Albert Einstein (Q937)"]
+    BornAtProperty["P19: Born at"]
+    UlmEntity["Ulm (Q20440)"]
+  end
+  %%Styling
+  style Claim fill:#bbf,stroke:#555,stroke-width:2px
+  style MainSnak fill:#ffb,stroke:#555,stroke-width:2px
+  style Property fill:#bbf,stroke:#555,stroke-width:2px
+  style DataValue fill:#bbf,stroke:#555,stroke-width:2px
+  style Qualifier fill:#bbf,stroke:#555,stroke-width:2px
+  style Reference fill:#bbf,stroke:#555,stroke-width:2px
+  style String fill:#eee,stroke:#555,stroke-width:2px
+  style WikipediaId fill:#eee,stroke:#555,stroke-width:2px
+  style EntityId fill:#eee,stroke:#555,stroke-width:2px
+  style EinsteinEntity fill:#eee,stroke:#000,stroke-width:2px
+  style BornAtProperty fill:#eee,stroke:#000,stroke-width:2px
+  style UlmEntity fill:#eee,stroke:#000,stroke-width:2px
+
+```
