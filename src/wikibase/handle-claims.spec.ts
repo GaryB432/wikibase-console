@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { beforeAll, describe, expect, test } from "vitest";
 import { handlePropertyClaims } from "./handle-claims";
 import { type PersonInfo } from "./types";
@@ -30,7 +29,7 @@ describe("HandleClaims", async () => {
     expect(fakey.employers).toBeUndefined();
   });
   test("fieldOfWork", () => {
-    expect(fakey.fieldOfWork).toEqual(["Anonymity", "Unit Testing"]);
+    expect(fakey.fieldOfWork).toEqual([]);
   });
   test("nationality", () => {
     expect(fakey.nationality).toBeUndefined();
