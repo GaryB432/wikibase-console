@@ -1,9 +1,7 @@
-import type { EntityId, Item } from "wikibase-sdk";
+import { type EntityId, type Item } from "wikibase-sdk";
 import { wikibaseService } from "./data-service.js";
-import { handlePropertyClaims } from "./handle-claims.js";
-import { getFieldsOfWork } from "./queries/fields.js";
-import { getSchoolsAttended } from "./queries/schools.js";
 import { type PersonInfo } from "./types.js";
+import { handlePropertyClaims } from "./handle-claims.js";
 
 const language = "en";
 
@@ -20,7 +18,7 @@ export async function handlePerson(
     // description: "",
     // employers: [],
     fetchDate: options?.fetchDate ?? new Date(),
-    fieldOfWork: [],
+    // fieldOfWork: [],
     // gender: "",
     id: "",
     // image: "",
@@ -46,11 +44,13 @@ export async function handlePerson(
   if (subject.type === "item") {
     personInfo.id = subject.id;
     handleLabels(subject, personInfo);
+    handleAliases(subject, personInfo);
 
     await handlePropertyClaims(subject, personInfo);
-    personInfo.schools = await getSchoolsAttended(subject);
-    personInfo.fieldOfWork = await getFieldsOfWork(subject);
+    // personInfo.schools = await getSchoolsAttended(subject);
+    // personInfo.fieldOfWork = await getFieldsOfWork(subject);  these are handled in claims now
   }
+  // greet(personInfo.name);
 
   return personInfo;
 }
@@ -60,5 +60,12 @@ function handleLabels(entity: Item, personInfo: PersonInfo) {
     personInfo.wikipediaTitle = personInfo.name =
       entity.labels[language]?.value || "dunno";
     // console.log(entity.labels[language]?.value);
+  }
+}
+function handleAliases(entity: Item, personInfo: PersonInfo) {
+  if (entity.aliases && entity.aliases[language]) {
+    personInfo.aliases = [...entity.aliases[language].values()].map(
+      (term) => term.value,
+    );
   }
 }
