@@ -60,5 +60,5 @@ main().then(
   },
   (e) => {
     console.error(e);
-  }
+  },
 );

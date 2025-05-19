@@ -24,7 +24,7 @@ export async function handlePropertyClaims(
       return a;
     }, {} as TermRecord);
 
-    return Object.values((await wikibaseService.fetchLabels(record)));
+    return Object.values(await wikibaseService.fetchLabels(record));
   }
 
   for (const propClaims of Object.values(entity.claims ?? {})) {
