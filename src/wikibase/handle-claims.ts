@@ -1,17 +1,32 @@
 import {
   type EntityId,
   type Item,
+  type PropertyId,
   wikibaseTimeToDateObject,
 } from "wikibase-sdk";
 import { WIKIDATA_PERSON_PROPERTIES as P } from "./constants.js";
+import { type TermRecord, wikibaseService } from "./data-service.js";
 import { type PersonInfo } from "./types.js";
-
-// const CONORID: EntityId = "P1280"; // identifier in the National and University Library, Ljubljana database
 
 export async function handlePropertyClaims(
   entity: Item,
   personInfo: PersonInfo,
 ): Promise<void> {
+  const propertyEntityIDs = new Map<PropertyId | string, EntityId[]>();
+
+  async function getEntityLabels(pid: PropertyId | string): Promise<string[]> {
+    const propEntities = propertyEntityIDs.get(pid);
+    if (!propEntities) {
+      return [];
+    }
+    const record = propEntities.reduce((a, eid) => {
+      a[eid] = eid;
+      return a;
+    }, {} as TermRecord);
+
+    return Object.values(await wikibaseService.fetchLabels(record));
+  }
+
   for (const propClaims of Object.values(entity.claims ?? {})) {
     for (const claim of propClaims) {
       const { mainsnak } = claim;
@@ -19,10 +34,8 @@ export async function handlePropertyClaims(
       // console.log("mainsnack", JSON.stringify(mainsnak));
 
       if (!mainsnak.datavalue) {
-        return;
+        break;
       }
-
-      const entityIdSet: Set<EntityId> = new Set();
 
       switch (mainsnak.datatype) {
         case "external-id": {
@@ -38,8 +51,13 @@ export async function handlePropertyClaims(
         }
         case "wikibase-item": {
           if (mainsnak.datavalue.type === "wikibase-entityid") {
-            // console.log(mainsnak.datavalue, "f85");
-            entityIdSet.add(mainsnak.datavalue.value.id);
+            const referencedId = mainsnak.datavalue.value.id;
+            let qids = propertyEntityIDs.get(mainsnak.property);
+            if (!qids) {
+              qids = [];
+              propertyEntityIDs.set(mainsnak.property, qids);
+            }
+            qids.push(referencedId);
           }
           break;
         }
@@ -84,8 +102,6 @@ export async function handlePropertyClaims(
       // await whaverThisUsedToBeDoing();
     }
   }
-  personInfo.fieldOfWork = ["Anonymity", "Unit Testing"];
-  console.log(personInfo.fieldOfWork);
-
-  //   console.log(entity)
+  personInfo.fieldOfWork = await getEntityLabels(P.FIELD_OF_WORK);
+  personInfo.schools = await getEntityLabels(P.EDUCATED_AT);
 }
