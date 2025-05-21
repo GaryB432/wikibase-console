@@ -1,9 +1,9 @@
 import { argv } from "node:process";
 import prompts, { type Choice } from "prompts";
 import { type EntityId } from "wikibase-sdk";
-import { wikibaseService } from "wikibase/data-service.js";
-import { report } from "wikibase/print-entity.js";
+import { wikibaseService } from "./wikibase/data-service.js";
 import { handlePerson } from "./wikibase/handle-entity.js";
+import { report } from "./wikibase/print-entity.js";
 
 // const others: string[] = [
 //   P.DATE_OF_BIRTH,
@@ -26,7 +26,11 @@ async function promptChoiceFrom(name: string): Promise<Choice[]> {
 async function getEntityId(name: string): Promise<EntityId | null> {
   const choices = await promptChoiceFrom(name);
 
-  if (choices.length === 1) {
+  if (choices.length == 0) {
+    return null;
+  }
+
+  if (choices.length == 1) {
     return choices[0]!.value;
   }
 
@@ -35,7 +39,7 @@ async function getEntityId(name: string): Promise<EntityId | null> {
       return term === "" ? null : "select";
     },
     name: "id",
-    message: "Choose one",
+    message: "Choose Wikidata Entity",
     choices,
   });
 

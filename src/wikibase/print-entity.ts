@@ -1,6 +1,6 @@
+import chalk from "chalk";
 import type { EntityId, PropertyClaims, PropertyId } from "wikibase-sdk";
 import { propertyNames } from "./constants.js";
-import chalk from 'chalk'
 import { type TermRecord, wikibaseService } from "./data-service.js";
 
 export function greet(name: string): string {
@@ -44,7 +44,6 @@ export async function report(id: EntityId): Promise<string[]> {
   const rpt: string[] = [];
 
   if (subject.type === "item" && subject.claims) {
-
     for (const [p, propClaims] of Object.entries(subject.claims)) {
       const pname = propertyNames.get(p as PropertyId);
       if (pname) {
@@ -56,8 +55,8 @@ export async function report(id: EntityId): Promise<string[]> {
         );
 
         const labels = await wikibaseService.fetchLabels(terms);
-        const parts = Object.values(labels).map(b => chalk.blueBright(b))
-        rpt.push(parts.join(', '));
+        const parts = Object.values(labels).map((b) => chalk.blueBright(b));
+        rpt.push(parts.join(", "));
       }
     }
   }
