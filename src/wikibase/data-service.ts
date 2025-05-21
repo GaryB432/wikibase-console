@@ -8,7 +8,7 @@ import type {
   SearchResult,
   Wbk,
 } from "wikibase-sdk";
-import WBK from "wikibase-sdk";
+import WBK, { isItemId } from "wikibase-sdk";
 
 export type TermRecord = Record<EntityId, string>;
 
@@ -56,8 +56,16 @@ export class DataService {
     entityLabelRecord: TermRecord,
     language = "en",
   ): Promise<TermRecord> {
+    const ids = Object.keys(entityLabelRecord) as EntityId[];
+    if (!ids.every(isItemId)) {
+      console.error(JSON.stringify(entityLabelRecord));
+      throw new Error("Only Items supported");
+    }
+    if (ids.length === 0) {
+      return {};
+    }
     const entitiesUrl = this.wbk.getEntities({
-      ids: Object.keys(entityLabelRecord) as EntityId[],
+      ids,
       languages: [language],
       props: ["labels"],
     });
@@ -73,7 +81,9 @@ export class DataService {
         let text = `missing term for ${item.title ?? item.id}`;
 
         if (item.labels) {
-          text = item.labels[language]?.value ?? "wtf";
+          text =
+            item.labels[language]?.value ??
+            `no ${language} value for ${item.id}`;
         }
         termAccumulator[item.id] = text;
         return termAccumulator;

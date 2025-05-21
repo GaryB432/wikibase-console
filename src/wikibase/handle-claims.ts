@@ -102,6 +102,7 @@ export async function handlePropertyClaims(
       // await whaverThisUsedToBeDoing();
     }
   }
+
   personInfo.fieldOfWork = await getEntityLabels(P.FIELD_OF_WORK);
   personInfo.schools = await getEntityLabels(P.EDUCATED_AT);
 }

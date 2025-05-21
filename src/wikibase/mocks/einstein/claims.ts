@@ -39,7 +39,8 @@ const references: Reference[] = [
     "snaks-order": ["P854"],
   },
 ];
-const schoolClaims: Claims = {
+
+export const schoolClaims: Claims = {
   P69: [
     {
       mainsnak: {
@@ -87,8 +88,87 @@ const schoolClaims: Claims = {
   ],
 };
 
-export const claims: Claims = {
-  ...schoolClaims,
+export const fieldClaims: Claims = {
+  P101: [
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P101",
+        hash: "",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            id: "Q10001",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+
+      id: "q937$9297F2A2-FAD7-466F-8B30-79AA41E8793F",
+      rank: "normal",
+      references: [],
+    },
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P101",
+        hash: "",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            id: "Q10002",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+      id: "Q937$bdd0de70-44e3-c7c5-8566-0389c0bd14e7",
+      rank: "normal",
+    },
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P101",
+        hash: "",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            id: "Q10004",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+      id: "Q937$b2fb71ab-49ad-df08-7b3b-8bd09a55ae77",
+      rank: "normal",
+    },
+    {
+      mainsnak: {
+        snaktype: "value",
+        property: "P101",
+        hash: "",
+        datavalue: {
+          value: {
+            "entity-type": "item",
+            id: "Q10003",
+          },
+          type: "wikibase-entityid",
+        },
+        datatype: "wikibase-item",
+      },
+      type: "statement",
+      id: "Q937$E90CA760-E20F-4EED-BDB8-F72DCF4B484C",
+      rank: "normal",
+      references: [],
+    },
+  ],
+};
+
+export const otherClaims: Claims = {
   P569: [
     {
       mainsnak: {
