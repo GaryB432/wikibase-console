@@ -168,7 +168,6 @@ export const fieldClaims: Claims = {
   ],
 };
 
-
 export const otherClaims: Claims = {
   P569: [
     {

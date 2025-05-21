@@ -1,6 +1,6 @@
 import type { EntityId, PropertyClaims, PropertyId } from "wikibase-sdk";
 import { propertyNames } from "./constants.js";
-import { TermRecord, wikibaseService } from "./data-service.js";
+import { type TermRecord, wikibaseService } from "./data-service.js";
 
 export function greet(name: string): string {
   return `print-entity says: hello to ${name}`;
