@@ -1,3 +1,5 @@
+import type { PropertyId } from "wikibase-sdk";
+
 // Common Wikidata properties for people
 export const WIKIDATA_PERSON_PROPERTIES = {
   INSTANCE_OF: "P31", // Instance of (should be human Q5 for people)
@@ -44,3 +46,44 @@ export const WIKIDATA_PERSON_PROPERTIES = {
 export const WIKIDATA_OTHER_PROPERTIES = {
   START_TIME: "P580", // time an entity begins to exist or a statement starts being valid
 };
+export const propertyNames: Map<PropertyId, string> = new Map([
+  ["P9", "CAUSE_OF_DEATH"],
+  ["P18", "IMAGE"],
+  ["P19", "PLACE_OF_BIRTH"],
+  ["P20", "PLACE_OF_DEATH"],
+  ["P21", "GENDER"],
+  ["P22", "FATHER"],
+  ["P25", "MOTHER"],
+  ["P26", "SPOUSE"],
+  ["P27", "COUNTRY_OF_CITIZENSHIP"],
+  ["P31", "INSTANCE_OF"],
+  ["P39", "POSITION_HELD"],
+  ["P40", "CHILD"],
+  ["P69", "EDUCATED_AT"],
+  ["P101", "FIELD_OF_WORK"],
+  ["P102", "POLITICAL_PARTY"],
+  ["P103", "NATIVE_LANGUAGE"],
+  ["P106", "OCCUPATION"],
+  ["P108", "EMPLOYER"],
+  ["P140", "RELIGION"],
+  ["P166", "AWARD_RECEIVED"],
+  ["P184", "DOCTORAL_ADVISOR"],
+  ["P185", "DOCTORAL_STUDENT"],
+  ["P463", "MEMBER_OF"],
+  ["P496", "ORCID_ID"],
+  ["P551", "RESIDENCE"],
+  ["P569", "DATE_OF_BIRTH"],
+  ["P570", "DATE_OF_DEATH"],
+  ["P734", "FAMILY_NAME"],
+  ["P735", "GIVEN_NAME"],
+  ["P800", "NOTABLE_WORK"],
+  ["P856", "OFFICIAL_WEBSITE"],
+  ["P968", "EMAIL_ADDRESS"],
+  ["P1343", "BIBLIOGRAPHY"],
+  ["P1412", "LANGUAGE_SPOKEN"],
+  ["P2002", "TWITTER_USERNAME"],
+  ["P2013", "FACEBOOK_ID"],
+  ["P2037", "GITHUB_USERNAME"],
+  ["P2048", "HEIGHT"],
+  ["P6634", "LINKEDIN_ID"],
+]);
