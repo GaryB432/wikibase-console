@@ -2,6 +2,7 @@ import { argv } from "node:process";
 import prompts, { type Choice } from "prompts";
 import { type EntityId } from "wikibase-sdk";
 import { wikibaseService } from "wikibase/data-service.js";
+import { report } from "wikibase/print-entity.js";
 import { handlePerson } from "./wikibase/handle-entity.js";
 
 // const others: string[] = [
@@ -51,6 +52,10 @@ async function main(): Promise<void> {
   if (subjectId) {
     const p = await handlePerson(subjectId);
     console.log(JSON.stringify(p, undefined, 4));
+    const r = await report(subjectId);
+    for (const ll of r) {
+      console.log(ll);
+    }
   }
 }
 

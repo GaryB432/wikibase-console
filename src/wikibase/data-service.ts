@@ -56,8 +56,12 @@ export class DataService {
     entityLabelRecord: TermRecord,
     language = "en",
   ): Promise<TermRecord> {
+    let ids = Object.keys(entityLabelRecord) as EntityId[];
+    if (ids.length === 0) {
+      return {};
+    }
     const entitiesUrl = this.wbk.getEntities({
-      ids: Object.keys(entityLabelRecord) as EntityId[],
+      ids,
       languages: [language],
       props: ["labels"],
     });
