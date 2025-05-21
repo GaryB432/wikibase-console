@@ -50,6 +50,18 @@ Be a repo that
 
 # Wikidata and the Semantic Web
 
+[Wikidata:List of properties/all in one table - Wikidata](https://www.wikidata.org/wiki/Wikidata:List_of_properties/all_in_one_table)
+
+[Help:Data type - Wikidata](https://www.wikidata.org/wiki/Help:Data_type#wikibase-item)
+
+[CONOR.SI ID - Wikidata](https://www.wikidata.org/wiki/Property:P1280?format=json)
+
+## More
+
+[Wikidata Property Explorer](https://prop-explorer.toolforge.org/)
+
+[All pages (Property namespace) - Wikidata](https://www.wikidata.org/wiki/Special:AllPages?from=&to=&namespace=120)
+
 ```mermaid
 graph TD
   subgraph ClaimStructure

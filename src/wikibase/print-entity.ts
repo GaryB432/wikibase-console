@@ -1,5 +1,6 @@
 import type { EntityId, PropertyClaims, PropertyId } from "wikibase-sdk";
 import { propertyNames } from "./constants.js";
+import chalk from 'chalk'
 import { type TermRecord, wikibaseService } from "./data-service.js";
 
 export function greet(name: string): string {
@@ -17,8 +18,6 @@ function makeTermRecordFor(
   p: PropertyId,
 ): TermRecord {
   const terms: TermRecord = {};
-
-  console.log(p);
 
   for (const c of propClaims) {
     const { mainsnak } = c;
@@ -45,7 +44,6 @@ export async function report(id: EntityId): Promise<string[]> {
   const rpt: string[] = [];
 
   if (subject.type === "item" && subject.claims) {
-    // console.log(subject.claims);
 
     for (const [p, propClaims] of Object.entries(subject.claims)) {
       const pname = propertyNames.get(p as PropertyId);
@@ -58,7 +56,8 @@ export async function report(id: EntityId): Promise<string[]> {
         );
 
         const labels = await wikibaseService.fetchLabels(terms);
-        rpt.push(...Object.values(labels));
+        const parts = Object.values(labels).map(b => chalk.blueBright(b))
+        rpt.push(parts.join(', '));
       }
     }
   }
