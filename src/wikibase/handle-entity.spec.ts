@@ -117,10 +117,13 @@ vi.mock("./data-service.js", () => {
   return {
     wikibaseService: {
       fetchLabels: vi.fn((a) =>
-        Object.keys(a).reduce((b, c) => {
-          b[c] = `LABEL ${c}`;
-          return b;
-        }, {} as Record<string, string>),
+        Object.keys(a).reduce(
+          (b, c) => {
+            b[c] = `LABEL ${c}`;
+            return b;
+          },
+          {} as Record<string, string>,
+        ),
       ),
       fetchDetailedEntity: vi.fn(() => q01),
     },

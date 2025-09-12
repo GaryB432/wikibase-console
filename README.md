@@ -17,7 +17,6 @@ Be a repo that
 - can be used to reproduce any dependency issues
 - takes baby-steps with LLM and co-pilot (commit messages for now and just a bit of code generation which is documented)
 - serves as dogfood and a laboratory for my other projects
-
   - [eslint-plugin-gb - npm](https://www.npmjs.com/package/eslint-plugin-gb)
   - [gb-schematics - npm](https://www.npmjs.com/package/gb-schematics)
   - [humanaccomplishment.com](https://www.humanaccomplishment.com)
