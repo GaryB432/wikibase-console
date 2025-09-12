@@ -1,6 +1,6 @@
 import axios from "axios";
 import { beforeEach, expect, test, vi } from "vitest";
-import { DataService } from "./data-service";
+import { DataService } from "./data-service.js";
 
 vi.mock("axios");
 

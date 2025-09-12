@@ -2,7 +2,7 @@ import { afterEach, beforeAll, describe, expect, test, vi } from "vitest";
 import type { Entities, EntityId, Item } from "wikibase-sdk";
 import * as dataService from "./data-service.js";
 import { handlePerson } from "./handle-entity.js";
-import { type PersonInfo } from "./types";
+import { type PersonInfo } from "./types.js";
 
 const fetchDate = new Date(2094, 3, 20);
 
@@ -120,7 +120,7 @@ vi.mock("./data-service.js", () => {
         Object.keys(a).reduce((b, c) => {
           b[c] = `LABEL ${c}`;
           return b;
-        }, {}),
+        }, {} as Record<string, string>),
       ),
       fetchDetailedEntity: vi.fn(() => q01),
     },

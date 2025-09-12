@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { add, greet, meaning } from "./print-entity";
+import { add, greet, meaning } from "./print-entity.js";
 
 describe("PrintEntity", () => {
   test("adds", () => {

@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, test } from "vitest";
-import { handlePropertyClaims } from "./handle-claims";
-import { type PersonInfo } from "./types";
+import { handlePropertyClaims } from "./handle-claims.js";
+import { type PersonInfo } from "./types.js";
 
 describe("HandleClaims", async () => {
   const fakey: PersonInfo = {
