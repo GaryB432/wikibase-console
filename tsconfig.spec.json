@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": [
+      "es2022"
+    ],
+    "emitDeclarationOnly": true,
+    "isolatedModules": true,
+    "types": [
+      "node"
+    ],
+    "outDir": "./.jest-cache"
+  },
+  "include": [
+    "src/**/*",
+    "__tests__/**/*"
+  ]
+}
